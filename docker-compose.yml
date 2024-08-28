@@ -1,0 +1,12 @@
+# 2023-10-24 changed mount directory
+
+services:
+  intranet-php8:
+    image: srvgit.intosano.it:5050/intranet/dockerfiles/php8-laravel-10:1.0-prod-xdebug-20240130
+    container_name: webapp
+    network_mode: "bridge"
+    volumes:
+      - .:/var/www/html
+    ports:
+      - "80:80"
+      - "9003:9003"
