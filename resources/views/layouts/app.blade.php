@@ -6,7 +6,7 @@
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
         <title>webapp buyer</title>
-
+        
         <!-- bootstrap css -->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
@@ -31,11 +31,12 @@
                 </header>
             @endif
 
-            <!-- Page Content -->
+            <!-- Page Content in homepage.blade.php -->
             <main>
                 @yield('content')
             </main>
         </div>
+        
     </body>
     
 </html>

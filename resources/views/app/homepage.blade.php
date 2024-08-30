@@ -2,53 +2,61 @@
     <h1>Ciao mondo</h1>
 </div> -->
 
+<!-- ----------------------------------------------------------HOME PAGE PER AGGIUNTA BARCODE, FOTO, NOTE -->
 @extends('layouts.app')
 
 @section('content')
-<div class="container mt-5 bg-white">
-    
-    <!-- LOGO TOSANO -->
+<div class="container mt-4">
 
-    <div class="text-center">
-        <img src="{{ asset('storage/logo/logo.png') }}" alt="Logo" class="mb-4">
+<!-------------------------------------------------------- LOGO TOSANO -->
+    <div class="text-center mb-2">
+        <!-- se attivo questo cliccando su qualsiasi zona dello schemo mi porta alla dashboard -->
+        <!-- <a href="{{ route('dashboard') }}"> -->
+            <img src="{{ asset('storage/logo/logo.png') }}" alt="Logo" class="img-fluid" style="max-width: 230px;">
     </div>
 
+<!-------------------------------------------------------- FORM DI AGGIUNTA DETTAGLIO -->
+    <div class="mx-auto">
+        <div class="card-body p-3">
+            <h2 class="text-center mb-2 blue_color" style="font-size: 2.5rem;">Aggiungi dettagli prodotto</h2>
 
-    <!-- FORM DI AGGIUNTA DETTAGLIO -->
-    <div class=" p-4">
-        <h2 class="text-center mb-4">Aggiungi dettagli prodotto</h2>
-
-        <form>
-            <!-- BARCODE -->
-            <div class="mb-3">
-                <label for="barcode" class="form-label">Aggiungi barcode:</label>
-                <div class="input-group">
-                    <span class="input-group-text">+</span>
-                    <input type="text" class="form-control" id="barcode" placeholder="Inserisci barcode">
+            <form action="{{route('aggiunta-page')}}" method="POST">
+                @csrf
+<!-- ------------------------------------------BARCODE -->
+                <div class="mb-2">
+                    <label for="barcode" class="form-label" style="font-size: 1.6rem;">Aggiungi barcode:</label>
+                    <div class="input-group">
+                        <span class="input-group-text">+</span>
+                        <input type="text" class="form-control" id="barcode" placeholder="Inserisci barcode"
+                            style="border: 1px solid #666666; border-radius: 0 8px 8px 0; height:50px">
+                    </div>
                 </div>
-            </div>
 
-            <!--AGGIUNGI FOTO -->
-            <div class="mb-3">
-                <label for="photo" class="form-label">Aggiungi foto:</label>
-                <div class="input-group">
-                    <span class="input-group-text">+</span>
-                    <input type="file" class="form-control" id="photo">
+<!-- ------------------------------------------AGGIUNGI FOTO -->
+                <div class="mb-2">
+                    <label for="photo" class="form-label" style="font-size: 1.6rem;">Aggiungi foto:</label>
+                    <div class="input-group">
+                        <span class="input-group-text">+</span>
+                        <input type="file" class="form-control" id="photo"  style="border: 1px solid #666666; border-radius: 0 8px 8px 0; height:50px">
+                    </div>
                 </div>
-            </div>
 
-            <!-- NOTA -->
-            <div class="mb-3">
-                <label for="note" class="form-label">Aggiungi nota:</label>
-                <textarea class="form-control" id="note" rows="3"
-                    placeholder="Inserisci note riguardanti il prodotto, consigli posizionamento ecc."></textarea>
-            </div>
+<!---------------------------------------------NOTA -->
+                <div class="mb-3">
+                    <label for="note" class="form-label" style="font-size: 1.6rem;">Aggiungi nota:</label>
+                    <textarea class="form-control" id="note" rows="5"
+                        placeholder="Inserisci note riguardanti il prodotto, consigli posizionamento ecc."
+                        style="border-radius: 8px; border: 1px solid #666666;"></textarea>
+                </div>
 
-            <!-- BOTTONE DI INVIO -->
-            <div class="d-grid">
-                <button type="submit" class="btn btn-danger">Carica</button>
-            </div>
-        </form>
+<!-- ------------------------------------------BOTTONE DI INVIO -->
+                <div class="d-grid">
+                    <button type="submit" class="btn btn-danger"
+                        style="background-color: #D32F2F; border-radius: 8px; height: 5rem; font-size: 2rem;">Carica</button>
+                        
+                </div>
+            </form>
+        </div>
     </div>
 </div>
 @endsection

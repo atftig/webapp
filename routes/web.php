@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AddController;
+use App\Http\Controllers\BuyerController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,6 +22,12 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/home', function () {
     return view('app.homepage');
+});
+
+Route::get('/aggiunta-page', [AddController::class, 'index'])->name('aggiunta-page');
+
+Route::post('/aggiunta-page', function(){
+    return view('app.aggiunta-page');
 });
 
 // Route::get('/buyer', [App\Http\Controllers\BuyerController::class, 'index'])->name('buyer.index');
