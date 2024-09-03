@@ -11,11 +11,13 @@
                 class="fa-solid fa-user"></i></button>
     </div>
 
-    <div class="text-center fs-1 fw-bold text-primary mt-5 lh-base">
-        <h1>DETTAGLIO <br> ARTICOLO <br> AGGIUNTO <br> CON <br> SUCCESSO <br> <i
-                class="fa-solid fa-check text-success"></i></h1>
+    <div class="text-center">
+        <div class="text-center fs-1 fw-bold text-primary mt-5 mb-5 ">
+            <h1 style="font-size: 2.5rem;">DETTAGLIO <br> ARTICOLO <br> AGGIUNTO <br> CON <br> SUCCESSO <br> <br> <i
+                    class="fa-solid fa-check text-success"></i></h1>
+        </div>
+        <a href="{{route('homepage')}}" class="text-decoration-underline" style="font-size: 1.3rem;"> clicca qui per aggiungerne un altro</a>
     </div>
-    <a href="resources/views/app/homepage.blade.php" class="text-decoration-underline"> clicca qui per aggiungere un altro</a>
 
 </div>
 @endsection

@@ -9,13 +9,15 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
+use App\Models\Login;
+use App\Models\User;
 
 class AuthenticatedSessionController extends Controller
 {
     /**
      * Display the login view.
      */
-    public function create(): View
+    public function create()
     {
         return view('auth.login');
     }
@@ -23,13 +25,40 @@ class AuthenticatedSessionController extends Controller
     /**
      * Handle an incoming authentication request.
      */
+
+    // public function store(LoginRequest $request): RedirectResponse
+    // {
+    //     // Ottieni i dati dalla richiesta
+    //     $name = $request->input('name');
+    //     $password = $request->input('password');
+
+    //     // Cerca l'utente nel database utilizzando il nome fornito
+    //     $user = Login::where('name', $name)->first();
+
+    //     if ($user && $user->password === $password) {
+    //         // Autenticazione riuscita
+    //         // Rigenera la sessione per motivi di sicurezza
+    //         $request->session()->regenerate();
+
+    //         // Reindirizza alla homepage
+    //         return redirect()->to(route("homepage"));
+    //     } else {
+    //         // Autenticazione fallita
+    //         return redirect()->back()->withErrors(['login' => 'Nome utente o password errati.'])
+    //             ->onlyInput('name');
+    //     }
+    // }
+
+
+
     public function store(LoginRequest $request): RedirectResponse
     {
-        $request->authenticate();
+        return redirect()->to(route("homepage"));
+    // $request->authenticate();
 
-        $request->session()->regenerate();
+    // $request->session()->regenerate();
 
-        return redirect()->intended(RouteServiceProvider::HOME);
+    // return redirect()->intended(RouteServiceProvider::HOME);
     }
 
     /**

@@ -4,7 +4,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AddController;
 use App\Http\Controllers\BuyerController;
-
+use App\Http\Controllers\Auth\AuthenticatedSessionController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -30,6 +30,12 @@ Route::post('/aggiunta-page', function(){
     return view('app.aggiunta-page');
 });
 
+Route::get('/homepage', function(){
+    return view('app.homepage');
+})->name('homepage');
+
+Route::get('login', [AuthenticatedSessionController::class, 'create'])->name('login');
+Route::post('login', [AuthenticatedSessionController::class, 'store']);
 // Route::get('/buyer', [App\Http\Controllers\BuyerController::class, 'index'])->name('buyer.index');
 
 Route::get('/dashboard', function () {
