@@ -26,40 +26,39 @@ class AuthenticatedSessionController extends Controller
      * Handle an incoming authentication request.
      */
 
-    // public function store(LoginRequest $request): RedirectResponse
-    // {
-    //     // Ottieni i dati dalla richiesta
-    //     $name = $request->input('name');
-    //     $password = $request->input('password');
-
-    //     // Cerca l'utente nel database utilizzando il nome fornito
-    //     $user = Login::where('name', $name)->first();
-
-    //     if ($user && $user->password === $password) {
-    //         // Autenticazione riuscita
-    //         // Rigenera la sessione per motivi di sicurezza
-    //         $request->session()->regenerate();
-
-    //         // Reindirizza alla homepage
-    //         return redirect()->to(route("homepage"));
-    //     } else {
-    //         // Autenticazione fallita
-    //         return redirect()->back()->withErrors(['login' => 'Nome utente o password errati.'])
-    //             ->onlyInput('name');
-    //     }
-    // }
-
-
 
     public function store(LoginRequest $request): RedirectResponse
     {
-        return redirect()->to(route("homepage"));
-    // $request->authenticate();
+        // Ottiene i dati dalla richiesta
+        $name = $request->input('name');
+        $password = $request->input('password');
 
-    // $request->session()->regenerate();
+        // Cerca l'utente nel database utilizzando il nome fornito
+        $user = User::where('name', $name)->first();
 
-    // return redirect()->intended(RouteServiceProvider::HOME);
+        if ($user && $user->password === $password) {
+            // Autenticazione riuscita
+            $request->session()->regenerate();
+
+            // Reindirizza alla homepage
+            return redirect()->to(route("homepage"));
+        } else {
+            // Autenticazione fallita
+            return redirect()->back()->withErrors(['login' => 'Nome utente o password errati.'])
+                ->onlyInput('name');
+        }
     }
+
+
+    // public function store(LoginRequest $request): RedirectResponse
+    // {
+    //     return redirect()->to(route("homepage"));
+    //     $request->authenticate();
+
+    //     $request->session()->regenerate();
+
+    //     return redirect()->intended(RouteServiceProvider::HOME);
+    // }
 
     /**
      * Destroy an authenticated session.
