@@ -20,14 +20,14 @@
         <div class="card-body p-3">
             <h2 class="text-center mb-2 blue_color" style="font-size: 2.5rem;">Aggiungi dettagli prodotto</h2>
 
-            <form action="{{route('aggiunta-page')}}" method="POST">
+            <form action="{{route('store-product')}}" method="POST" enctype="multipart/form-data">
                 @csrf
 <!-- ------------------------------------------BARCODE -->
                 <div class="mb-2">
                     <label for="barcode" class="form-label" style="font-size: 1.6rem;">Aggiungi barcode:</label>
                     <div class="input-group">
                         <span class="input-group-text">+</span>
-                        <input type="text" class="form-control" id="barcode" placeholder="Inserisci barcode"
+                        <input type="text" class="form-control" id="barcode" name="barcode" placeholder="Inserisci barcode"
                             style="border: 1px solid #666666; border-radius: 0 8px 8px 0; height:50px">
                     </div>
                 </div>
@@ -37,14 +37,14 @@
                     <label for="photo" class="form-label" style="font-size: 1.6rem;">Aggiungi foto:</label>
                     <div class="input-group">
                         <span class="input-group-text">+</span>
-                        <input type="file" class="form-control" id="photo"  style="border: 1px solid #666666; border-radius: 0 8px 8px 0; height:50px">
+                        <input type="file" class="form-control" id="photo" name="photo" style="border: 1px solid #666666; border-radius: 0 8px 8px 0; height:50px" required>
                     </div>
                 </div>
 
 <!---------------------------------------------NOTA -->
                 <div class="mb-3">
                     <label for="note" class="form-label" style="font-size: 1.6rem;">Aggiungi nota:</label>
-                    <textarea class="form-control" id="note" rows="5"
+                    <textarea class="form-control" id="note" name="note" rows="5"
                         placeholder="Inserisci note riguardanti il prodotto, consigli posizionamento ecc."
                         style="border-radius: 8px; border: 1px solid #666666;"></textarea>
                 </div>

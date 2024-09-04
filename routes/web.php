@@ -34,6 +34,13 @@ Route::get('/homepage', function(){
     return view('app.homepage');
 })->name('homepage');
 
+
+Route::post('/aggiungi-prodotto', [BuyerController::class,'store'])->name('store-product');
+Route::get('/aggiunta-page', function(){
+    return view('app.aggiunta-page');
+})->name('aggiunta-page');
+
+
 Route::get('login', [AuthenticatedSessionController::class, 'create'])->name('login');
 Route::post('login', [AuthenticatedSessionController::class, 'store']);
 // Route::get('/buyer', [App\Http\Controllers\BuyerController::class, 'index'])->name('buyer.index');
