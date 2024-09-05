@@ -23,6 +23,16 @@
             <form action="{{route('store-product')}}" method="POST" enctype="multipart/form-data">
                 @csrf
 <!-- ------------------------------------------BARCODE -->
+                @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
+
                 <div class="mb-2">
                     <label for="barcode" class="form-label" style="font-size: 1.6rem;">Aggiungi barcode:</label>
                     <div class="input-group">
@@ -37,7 +47,14 @@
                     <label for="photo" class="form-label" style="font-size: 1.6rem;">Aggiungi foto:</label>
                     <div class="input-group">
                         <span class="input-group-text">+</span>
-                        <input type="file" class="form-control" id="photo" name="photo" style="border: 1px solid #666666; border-radius: 0 8px 8px 0; height:50px" required>
+                        <input 
+                        id="photo" 
+                        class="form-control" 
+                        name="photo" 
+                        type="file" 
+                        multiple
+                        style="border: 1px solid #666666; border-radius: 0 8px 8px 0; height:50px" 
+                        required>
                     </div>
                 </div>
 
