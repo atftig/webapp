@@ -22,7 +22,7 @@
             <ul class="dropdown-menu" aria-labelledby="buyerDropdown">
                 <li>
                     <!-- attualmente il bottone nel dropdown per il logout è disabilitato per evitare che l'utente possa uscire da account-->
-                    <a href="{{ route('logout') }}" class="dropdown-item text-danger disabled"   
+                    <a href="{{ route('logout') }}" class="dropdown-item text-danger disabled"
                         onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                         Esci <i class="fa-solid fa-right-from-bracket"></i>
                     </a>
@@ -38,7 +38,7 @@
     <div class="text-center">
         <div class="text-center fs-1 fw-bold text-primary mt-2 mb-5">
             <h1 style="font-size: 1.5rem;">
-                DETTAGLIO ARTICOLO <br> AGGIUNTO CON <br> SUCCESSO <br> 
+                DETTAGLIO <br> AGGIUNTO CON <br> SUCCESSO <br>
                 <i class="fs-1 fa-solid fa-check text-success mt-2"></i>
             </h1>
         </div>
@@ -47,8 +47,15 @@
         <div class="text-center mb-5">
             <p><strong>Barcode:</strong> {{ session('barcode') }}</p>
             <p><strong>Foto:</strong></p>
-            <img src="{{ asset('images/' . session('photo')) }}" alt="foto" style="max-width: 290px;"
-                class="img-fluid mb-3 ms-4 mt-2">
+
+            <!-- ciclo foreach per mostrare le immagini -->
+            @if(session('photos'))
+                @foreach (session('photos') as $photo)
+                    <img src="{{ asset('images/' . $photo) }}" alt="foto" style="max-width: 290px;"
+                        class="img-fluid mb-3 ms-4 mt-2">
+                @endforeach
+            @endif
+
             <p><strong>Note:</strong> {{ session('note') }}</p>
         </div>
 

@@ -7,6 +7,9 @@
 
 @section('content')
 <div class="container mt-4">
+<!-- libreria ZXing-js per l'aggiunta dello scanner -->
+<script src="https://cdn.jsdelivr.net/npm/@zxing/library@latest"></script>
+
 
 <!-------------------------------------------------------- LOGO TOSANO -->
     <div class="text-center mb-2">
@@ -22,16 +25,17 @@
 
             <form action="{{route('store-product')}}" method="POST" enctype="multipart/form-data">
                 @csrf
-<!-- ------------------------------------------BARCODE -->
+                <!-- Errori di validazione -->
                 @if ($errors->any())
-                    <div class="alert alert-danger">
-                        <ul>
-                            @foreach ($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                            @endforeach
-                        </ul>
-                    </div>
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
                 @endif
+                <!-- ------------------------------------------BARCODE -->
 
                 <div class="mb-2">
                     <label for="barcode" class="form-label" style="font-size: 1.6rem;">Aggiungi barcode:</label>
@@ -50,7 +54,7 @@
                         <input 
                         id="photo" 
                         class="form-control" 
-                        name="photo" 
+                        name="photo[]" 
                         type="file" 
                         multiple
                         style="border: 1px solid #666666; border-radius: 0 8px 8px 0; height:50px" 

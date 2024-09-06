@@ -30,7 +30,7 @@
             <div class="mb-3">
                 <x-input-label style="font-size: 1.5rem;" for="password" :value="__('Password')" />
                 <x-text-input style="height:50px" id="password" class="block mt-3 mb-4 w-full" type="password"
-                    name="password" required autocomplete="current-password" placeholder="inserisci password" />
+                    name="password" required autocomplete="current-password" placeholder="Inserisci password" />
                 <x-input-error :messages="$errors->get('password')" class="mt-2" />
             </div>
 
@@ -46,7 +46,7 @@
 
 
         <!-- Testo descrittivo sotto il pulsante -->
-        <div class="text-center mt-4 text-primary">
+        <div class="text-center mt-5 text-primary">
             <p class="text-xl">
                 Il nuovo sistema di gestione efficiente per l'inserimento di prodotti in azienda
             </p>
