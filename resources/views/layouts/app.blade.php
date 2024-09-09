@@ -23,8 +23,7 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
     <!-- libreria per scansione barcode -->
-    <script src="https://unpkg.com/html5-qrcode/minified/html5-qrcode.min.js"></script>
-
+    <script src="https://unpkg.com/@zxing/library@latest"></script>
 
 
 </head>
