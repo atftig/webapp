@@ -23,10 +23,10 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
     <!-- libreria per scansione barcode ZXING-->
-    <!-- <script src="https://unpkg.com/@zxing/library@latest"></script> -->
+    <script src="https://unpkg.com/@zxing/library@latest"></script>
 
     <!-- libreria per scansione barcode QUAGGA-->
-    <script src="https://unpkg.com/quagga/dist/quagga.min.js"></script>
+    <!-- <script src="https://unpkg.com/quagga/dist/quagga.min.js"></script> -->
 
 
 </head>

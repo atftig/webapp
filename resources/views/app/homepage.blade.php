@@ -80,7 +80,7 @@
 
 <!-- Script per attivare lo scanner -->
 
-<!-- <script>
+<script>
     // Chiedi accesso alla fotocamera
     navigator.mediaDevices.getUserMedia({ video: true })
         .then(function (stream) {
@@ -130,10 +130,10 @@
         stopScanButton.style.display = 'none';  // Nasconde il pulsante "Ferma scanner"
         startScanButton.style.display = 'inline'; // Mostra di nuovo il pulsante "Scansiona barcode"
     });
-</script> -->
+</script>
 
 
-<script>
+<!-- <script>
     document.getElementById('startScan').addEventListener('click', () => {
         const videoElement = document.getElementById('video');
         const videoContainer = document.getElementById('video-container');
@@ -194,8 +194,8 @@
         document.getElementById('stopScan').style.display = 'none';  // Nasconde il pulsante "Ferma scanner"
         document.getElementById('startScan').style.display = 'inline'; // Mostra di nuovo il pulsante "Scansiona barcode"
     });
-    
-</script>
+
+</script> -->
 
 
 @endsection
