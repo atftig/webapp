@@ -6,6 +6,7 @@
     <script src="https://cdn.jsdelivr.net/npm/@zxing/library@latest"></script>
 
     <!-------------------------------------------------------- LOGO TOSANO -->
+    
     <div class="text-center mb-2">
         <img src="{{ asset('storage/logo/logo.png') }}" alt="Logo" class="img-fluid" style="max-width: 230px;">
     </div>
@@ -60,7 +61,7 @@
                     </div>
                 </div>
 
-                <!-- ---------------------------------------------NOTA -->
+                <!-----------------------------------------------NOTA -->
                 <div class="mb-3">
                     <label for="note" class="form-label" style="font-size: 1.6rem;">Aggiungi nota:</label>
                     <textarea class="form-control" id="note" name="note" rows="5"
@@ -81,8 +82,7 @@
 <!-- Script per attivare lo scanner -->
 
 <script>
-    // Chiedi accesso alla fotocamera
-    navigator.mediaDevices.getUserMedia({ video: true })
+    navigator.mediaDevices.getUserMedia({ video: true })  //con getUserMedia(), il browser chiederà all'utente il permesso di accedere alla fotocamera e/o al microfono.
         .then(function (stream) {
             // console.log('Accesso alla fotocamera concesso');
             const video = document.getElementById('video');
@@ -130,10 +130,31 @@
         stopScanButton.style.display = 'none';  // Nasconde il pulsante "Ferma scanner"
         startScanButton.style.display = 'inline'; // Mostra di nuovo il pulsante "Scansiona barcode"
     });
+
 </script>
+    @endsection
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 <!-- <script>
+
+------LIBRERIA QUAGGA-----
     document.getElementById('startScan').addEventListener('click', () => {
         const videoElement = document.getElementById('video');
         const videoContainer = document.getElementById('video-container');
@@ -195,7 +216,5 @@
         document.getElementById('startScan').style.display = 'inline'; // Mostra di nuovo il pulsante "Scansiona barcode"
     });
 
-</script> -->
+</script>
 
-
-@endsection
