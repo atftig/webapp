@@ -23,10 +23,17 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
     <!-- libreria per scansione barcode ZXING-->
-    <script src="https://unpkg.com/@zxing/library@latest"></script>
+    <!-- <script src="https://unpkg.com/@zxing/library@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@zxing/library@latest"></script> -->
+
 
     <!-- libreria per scansione barcode QUAGGA-->
-    <!-- <script src="https://unpkg.com/quagga/dist/quagga.min.js"></script> -->
+    <!-- <script src="https://cdn.jsdelivr.net/npm/quagga@latest/dist/quagga.min.js"></script> -->
+    
+    <!-- libreria per scansione barcode html5-qrcode-->
+    <script src="https://unpkg.com/html5-qrcode/minified/html5-qrcode.min.js"></script>
+
+
 
 
 </head>

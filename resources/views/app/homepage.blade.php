@@ -2,11 +2,7 @@
 
 @section('content')
 <div class="container mt-4">
-    <!-- libreria ZXing-js per l'aggiunta dello scanner -->
-    <script src="https://cdn.jsdelivr.net/npm/@zxing/library@latest"></script>
-
     <!-------------------------------------------------------- LOGO TOSANO -->
-    
     <div class="text-center mb-2">
         <img src="{{ asset('storage/logo/logo.png') }}" alt="Logo" class="img-fluid" style="max-width: 230px;">
     </div>
@@ -34,7 +30,6 @@
                 <div class="mb-2">
                     <label for="barcode" class="form-label" style="font-size: 1.6rem;">Aggiungi barcode:</label>
                     <div class="input-group">
-                        <!-- <span class="input-group-text">+</span> -->
                         <input type="text" class="form-control" id="barcode" name="barcode"
                             placeholder="Inserisci barcode"
                             style="border: 1px solid #666666; border-radius: 0 8px 8px 0; height:50px">
@@ -46,7 +41,7 @@
                     </div>
                     <!-- Div che contiene il video dello scanner -->
                     <div id="video-container" class="text-center mt-3" style="display:none;">
-                        <video id="video" style="width:100%; max-width:400px;"></video>
+                        <div id="reader" style="width:100%; max-width:400px; height:300px;"></div>
                         <button type="button" id="stopScan" class="btn btn-danger mt-2">Ferma scanner</button>
                     </div>
                 </div>
@@ -55,7 +50,6 @@
                 <div class="mb-2">
                     <label for="photo" class="form-label" style="font-size: 1.6rem;">Aggiungi foto:</label>
                     <div class="input-group">
-                        <!-- <span class="input-group-text">+</span> -->
                         <input id="photo" class="form-control" name="photo[]" type="file" multiple
                             style="border: 1px solid #666666; border-radius: 0 8px 8px 0; height:50px" required>
                     </div>
@@ -80,60 +74,59 @@
 </div>
 
 <!-- Script per attivare lo scanner -->
-
+<script src="https://unpkg.com/html5-qrcode/minified/html5-qrcode.min.js"></script>
 <script>
-    navigator.mediaDevices.getUserMedia({ video: true })  //con getUserMedia(), il browser chiederà all'utente il permesso di accedere alla fotocamera e/o al microfono.
-        .then(function (stream) {
-            // console.log('Accesso alla fotocamera concesso');
-            const video = document.getElementById('video');
-            video.srcObject = stream;
-            video.play();
-        })
-        .catch(function (err) {
-            console.error('Accesso alla fotocamera negato: ', err);
-            alert('Per favore concedi l\'accesso alla fotocamera per utilizzare questa funzionalità.');
-        });
-
-    const codeReader = new ZXing.BrowserBarcodeReader();
-    const videoElement = document.getElementById('video');
     const videoContainer = document.getElementById('video-container');
     const barcodeInput = document.getElementById('barcode');
     const startScanButton = document.getElementById('startScan');
     const stopScanButton = document.getElementById('stopScan');
+    const readerContainer = document.getElementById('reader');
+    let html5QrCode;
 
-    // Evento per iniziare la scansione
-    startScanButton.addEventListener('click', () => {
+    // Funzione per avviare lo scanner
+    function startScanner() {
         videoContainer.style.display = 'block'; // Mostra il video
         stopScanButton.style.display = 'inline'; // Mostra il pulsante "Ferma scanner"
         startScanButton.style.display = 'none'; // Nasconde il pulsante "Scansiona barcode"
 
-        // Inizia la scansione dal dispositivo video
-        codeReader.decodeOnceFromVideoDevice(undefined, videoElement)
-            .then(result => {
-                console.log('Codice scansionato: ', result.text); // Mostra il risultato in console
-                barcodeInput.value = result.text;  // Inserisce il codice scansionato nell'input
-                codeReader.reset();  // Ferma lo scanner
-                videoContainer.style.display = 'none';  // Nasconde il video
-                stopScanButton.style.display = 'none';  // Nasconde il pulsante "Ferma scanner"
-                startScanButton.style.display = 'inline'; // Mostra di nuovo il pulsante "Scansiona barcode"
-            })
-            .catch(err => {
-                console.error('Errore durante la scansione: ', err); // Mostra l'errore in console
-                alert('Errore durante la scansione: ' + err); // Notifica visiva dell'errore
-            });
-    });
+        html5QrCode = new Html5Qrcode("reader");
 
-    // Evento per fermare la scansione
-    stopScanButton.addEventListener('click', () => {
-        codeReader.reset();  // Ferma lo scanner
-        videoContainer.style.display = 'none';  // Nasconde il video
-        stopScanButton.style.display = 'none';  // Nasconde il pulsante "Ferma scanner"
-        startScanButton.style.display = 'inline'; // Mostra di nuovo il pulsante "Scansiona barcode"
-    });
+        html5QrCode.start(
+            { facingMode: "environment" }, // Usa la fotocamera posteriore
+            {
+                fps: 10, // Frame per secondo
+                qrbox: { width: 250, height: 250 } // Area di scansione
+            },
+            (decodedText, decodedResult) => {
+                console.log(`Codice scansionato: ${decodedText}`);
+                barcodeInput.value = decodedText; // Inserisci il codice scansionato nell'input
+                stopScanner(); // Ferma lo scanner dopo la lettura
+            },
+            (errorMessage) => {
+                console.error(`Errore nella scansione: ${errorMessage}`);
+            }
+        ).catch(err => {
+            console.error("Errore durante l'inizializzazione dello scanner: ", err);
+            alert('Errore durante l\'avvio dello scanner: ' + err);
+        });
+    }
 
+    // Funzione per fermare lo scanner
+    function stopScanner() {
+        html5QrCode.stop().then(ignore => {
+            videoContainer.style.display = 'none'; // Nasconde il video
+            stopScanButton.style.display = 'none'; // Nasconde il pulsante "Ferma scanner"
+            startScanButton.style.display = 'inline'; // Mostra di nuovo il pulsante "Scansiona barcode"
+        }).catch(err => {
+            console.error("Errore durante l'arresto dello scanner: ", err);
+        });
+    }
+
+    // Eventi per i pulsanti
+    startScanButton.addEventListener('click', startScanner);
+    stopScanButton.addEventListener('click', stopScanner);
 </script>
-    @endsection
-
+@endsection
 
 
 

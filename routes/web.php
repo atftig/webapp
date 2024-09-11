@@ -26,19 +26,28 @@ Route::get('/home', function () {
 
 Route::get('/aggiunta-page', [AddController::class, 'index'])->name('aggiunta-page');
 
-Route::post('/aggiunta-page', function(){
+Route::post('/aggiunta-page', function () {
     return view('app.aggiunta-page');
 });
 
-Route::get('/homepage', function(){
+Route::get('/homepage', function () {
     return view('app.homepage');
 })->name('homepage');
 
+// Route::get('/testing', function () {
+//     return view('testing'); //'test' come nome della view
+// });
 
-Route::post('/aggiungi-prodotto', [BuyerController::class,'store'])->name('store-product');
-Route::get('/aggiunta-page', function(){
+Route::get('/test', function (){
+    return view('app.testing');
+});
+
+
+Route::post('/aggiungi-prodotto', [BuyerController::class, 'store'])->name('store-product');
+Route::get('/aggiunta-page', function () {
     return view('app.aggiunta-page');
 })->name('aggiunta-page');
+
 
 
 Route::get('login', [AuthenticatedSessionController::class, 'create'])->name('login');
@@ -55,4 +64,4 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
