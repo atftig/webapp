@@ -34,18 +34,10 @@
                             placeholder="Inserisci barcode"
                             style="border: 1px solid #666666; border-radius: 0 8px 8px 0; height:50px">
                     </div>
-                    <!-- Bottone per attivare lo SCANNER -->
-                    <div class="text-center mt-3">
-                        <button type="button" id="startScan" class="btn btn-primary"
-                            style="font-size: 1.5rem;">Scansiona barcode</button>
-                    </div>
-                    <!-- Div che contiene il video dello scanner -->
-                    <div id="video-container" class="text-center mt-3" style="display:none;">
-                        <div id="reader" style="width:100%; max-width:400px; height:300px;"></div>
-                        <button type="button" id="stopScan" class="btn btn-danger mt-2">Ferma scanner</button>
-                    </div>
-                </div>
+                 
 
+                <x-barcode-scanner />
+                
                 <!-- ------------------------------------------AGGIUNGI FOTO -->
                 <div class="mb-2">
                     <label for="photo" class="form-label" style="font-size: 1.6rem;">Aggiungi foto:</label>
@@ -74,7 +66,7 @@
 </div>
 
 <!-- Script per attivare lo scanner -->
-<script src="https://unpkg.com/html5-qrcode/minified/html5-qrcode.min.js"></script>
+<!-- <script src="https://unpkg.com/html5-qrcode/minified/html5-qrcode.min.js"></script> -->
 <script>
     const videoContainer = document.getElementById('video-container');
     const barcodeInput = document.getElementById('barcode');
