@@ -12,7 +12,7 @@
         <div class="card-body p-3">
             <h2 class="text-center mb-2 blue_color" style="font-size: 2.5rem;">Aggiungi dettagli prodotto</h2>
 
-            <form action="{{route('store-product')}}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('store-product') }}" method="POST" enctype="multipart/form-data">
                 @csrf
 
                 <!-- Errori di validazione -->
@@ -28,19 +28,24 @@
 
                 <!-- ------------------------------------------BARCODE -->
                 <div class="mb-2">
-                    <label for="barcode" class="form-label" style="font-size: 1.6rem;">Aggiungi barcode:</label>
-                    <div class="input-group">
-                        <input type="text" class="form-control" id="barcode" name="barcode"
-                            placeholder="Inserisci barcode"
-                            style="border: 1px solid #666666; border-radius: 0 8px 8px 0; height:50px">
-                    </div>
-                 
+                    <label for="barcode" class="form-label d-flex" style="font-size: 1.6rem;">1) Aggiungi barcode:</label>
+                    
+                    <!-- Input file per la scansione dell'immagine del barcode -->
+                    <input type="file" name="ufile" id="ufile">
+                    <!-- Campo per inserire il barcode tramite Quagga -->
+                    <input 
+                        type="text" 
+                        class="form-control" 
+                        id="x" 
+                        name="barcode"
+                        placeholder="Inserisci barcode"
+                        style="border: 1px solid #666666; border-radius: 0 8px 8px 0; height:50px">
+                    
+                </div>
 
-                <x-barcode-scanner />
-                
                 <!-- ------------------------------------------AGGIUNGI FOTO -->
                 <div class="mb-2">
-                    <label for="photo" class="form-label" style="font-size: 1.6rem;">Aggiungi foto:</label>
+                    <label for="photo" class="form-label" style="font-size: 1.6rem;">2) Aggiungi foto:</label>
                     <div class="input-group">
                         <input id="photo" class="form-control" name="photo[]" type="file" multiple
                             style="border: 1px solid #666666; border-radius: 0 8px 8px 0; height:50px" required>
@@ -49,7 +54,7 @@
 
                 <!-----------------------------------------------NOTA -->
                 <div class="mb-3">
-                    <label for="note" class="form-label" style="font-size: 1.6rem;">Aggiungi nota:</label>
+                    <label for="note" class="form-label" style="font-size: 1.6rem;">3) Aggiungi nota:</label>
                     <textarea class="form-control" id="note" name="note" rows="5"
                         placeholder="Inserisci note riguardanti il prodotto, consigli posizionamento ecc."
                         style="border-radius: 8px; border: 1px solid #666666;"></textarea>
@@ -65,67 +70,42 @@
     </div>
 </div>
 
-<!-- Script per attivare lo scanner -->
-<!-- <script src="https://unpkg.com/html5-qrcode/minified/html5-qrcode.min.js"></script> -->
+
+<script src="https://cdn.jsdelivr.net/npm/@ericblade/quagga2/dist/quagga.min.js"></script>
 <script>
-    const videoContainer = document.getElementById('video-container');
-    const barcodeInput = document.getElementById('barcode');
-    const startScanButton = document.getElementById('startScan');
-    const stopScanButton = document.getElementById('stopScan');
-    const readerContainer = document.getElementById('reader');
-    let html5QrCode;
+    const ufile = document.getElementById('ufile');
 
-    // Funzione per avviare lo scanner
-    function startScanner() {
-        videoContainer.style.display = 'block'; // Mostra il video
-        stopScanButton.style.display = 'inline'; // Mostra il pulsante "Ferma scanner"
-        startScanButton.style.display = 'none'; // Nasconde il pulsante "Scansiona barcode"
+    ufile.addEventListener(
+        'change',
+        (event) => {
+            let reader = new FileReader();
+            reader.readAsDataURL(ufile.files[0]);
 
-        html5QrCode = new Html5Qrcode("reader");
+            reader.onload = () => {
+                const content = reader.result;
 
-        html5QrCode.start(
-            { facingMode: "environment" }, // Usa la fotocamera posteriore
-            {
-                fps: 10, // Frame per secondo
-                qrbox: { width: 250, height: 250 } // Area di scansione
-            },
-            (decodedText, decodedResult) => {
-                console.log(`Codice scansionato: ${decodedText}`);
-                barcodeInput.value = decodedText; // Inserisci il codice scansionato nell'input
-                stopScanner(); // Ferma lo scanner dopo la lettura
-            },
-            (errorMessage) => {
-                console.error(`Errore nella scansione: ${errorMessage}`);
+                Quagga.decodeSingle(
+                    {
+                        src: content,
+                        locate: true,
+                        decoder: {
+                            readers: ["ean_reader"]
+                        }
+                    },
+                    function (result) {
+                        if (result.codeResult) {
+                            console.log("result", result.codeResult.code);
+                            document.getElementById('x').value = result.codeResult.code;
+                        } else {
+                            console.log("not detected");
+                        }
+                    }
+                )
             }
-        ).catch(err => {
-            console.error("Errore durante l'inizializzazione dello scanner: ", err);
-            alert('Errore durante l\'avvio dello scanner: ' + err);
-        });
-    }
-
-    // Funzione per fermare lo scanner
-    function stopScanner() {
-        html5QrCode.stop().then(ignore => {
-            videoContainer.style.display = 'none'; // Nasconde il video
-            stopScanButton.style.display = 'none'; // Nasconde il pulsante "Ferma scanner"
-            startScanButton.style.display = 'inline'; // Mostra di nuovo il pulsante "Scansiona barcode"
-        }).catch(err => {
-            console.error("Errore durante l'arresto dello scanner: ", err);
-        });
-    }
-
-    // Eventi per i pulsanti
-    startScanButton.addEventListener('click', startScanner);
-    stopScanButton.addEventListener('click', stopScanner);
+        }
+    );
 </script>
 @endsection
-
-
-
-
-
-
-
 
 
 
@@ -202,4 +182,3 @@
     });
 
 </script>
-

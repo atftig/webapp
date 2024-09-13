@@ -10,7 +10,13 @@
 <body>
     <input type="file" name="ufile" id="ufile">
     <form action="" method="get">
-        <input type="text" name="x" id="x">
+        <input 
+        type="text" 
+        class="form-control"
+        id="x"
+        name="x"
+        placeholder="Inserisci barcode"
+        style="border: 1px solid #666666; border-radius: 0 8px 8px 0; height:50px">
     </form>
 
     <script src="https://cdn.jsdelivr.net/npm/@ericblade/quagga2/dist/quagga.min.js"></script>
