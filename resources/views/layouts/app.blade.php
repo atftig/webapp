@@ -4,42 +4,22 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="csrf-token" content="{{ csrf_token() }}">
 
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Webapp Buyer</title>
 
-    <!-- bootstrap css -->
+    <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.bunny.net">
-    <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
-
+    
     <!-- Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
 
-
-    <!-- Scripts -->
+    <!-- Custom CSS  -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-
-    <!-- libreria per scansione barcode ZXING-->
-    <!-- <script src="https://unpkg.com/@zxing/library@latest"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@zxing/library@latest"></script> -->
-
-
-    <!-- libreria per scansione barcode QUAGGA-->
-    <!-- <script src="https://cdn.jsdelivr.net/npm/quagga@latest/dist/quagga.min.js"></script> -->
-    
-    <!-- libreria per scansione barcode html5-qrcode-->
-    <script src="https://unpkg.com/html5-qrcode/minified/html5-qrcode.min.js"></script>
-
-
-
-
 </head>
 
 <body class="font-sans antialiased">
-    <div class="min-h-screen ">
+    <div class="min-h-screen">
         @include('layouts.navigation')
 
         <!-- Page Heading -->
@@ -51,12 +31,14 @@
             </header>
         @endif
 
-        <!-- Page Content in homepage.blade.php -->
+        <!-- Page Content -->
         <main>
             @yield('content')
         </main>
     </div>
 
+    <!-- Bootstrap JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>

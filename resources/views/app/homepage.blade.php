@@ -28,29 +28,37 @@
 
                 <!-- ------------------------------------------BARCODE -->
                 <div class="mb-2">
-                    <label for="barcode" class="form-label d-flex" style="font-size: 1.6rem;">1) Aggiungi barcode:</label>
-                    
-                    <!-- Input file per la scansione dell'immagine del barcode -->
-                    <input type="file" name="ufile" id="ufile">
-                    <!-- Campo per inserire il barcode tramite Quagga -->
-                    <input 
-                        type="text" 
-                        class="form-control" 
-                        id="x" 
-                        name="barcode"
-                        placeholder="Inserisci barcode"
-                        style="border: 1px solid #666666; border-radius: 0 8px 8px 0; height:50px">
-                    
+                    <label for="barcode" class="form-label d-flex " style="font-size: 1.6rem;">1) Aggiungi
+                        barcode:</label>
+
+                    <!-- Campo per inserire il barcode con foto (ean-13) -->
+                    <label for="ufile" class="custom-file-upload">
+                        Scansiona barcode 
+                    </label>
+                    <input type="file" name="ufile" id="ufile" style="display: none;">
+
+                    <p class="mt-2">oppure</p>
+                    <!-- inserimento manuale del barcode -->
+                    <input type="text" class="form-control mt-2" id="x" name="barcode" placeholder="Inserisci barcode"
+                        style="border: 1px solid #666666; border-radius: 8px; height:50px">
+
                 </div>
 
                 <!-- ------------------------------------------AGGIUNGI FOTO -->
-                <div class="mb-2">
-                    <label for="photo" class="form-label" style="font-size: 1.6rem;">2) Aggiungi foto:</label>
-                    <div class="input-group">
-                        <input id="photo" class="form-control" name="photo[]" type="file" multiple
-                            style="border: 1px solid #666666; border-radius: 0 8px 8px 0; height:50px" required>
-                    </div>
+               
+                <div class="mb-2 ">
+                <label for="photo" class="form-label d-flex" style="font-size: 1.6rem;">2) Aggiungi foto:</label>
+                    <label for="file-input" class="custom-file-upload">
+                        Seleziona foto
+                    </label>
+                    <input id="file-input" class="form-control" name="photo[]" type="file" multiple
+                        style="display: none;" required>
+                    <ul id="file-list" class="file-list">
+                        <li>Nessun file selezionato</li>
+                    </ul>
+                    <div id="image-preview" class="image-preview"></div>
                 </div>
+
 
                 <!-----------------------------------------------NOTA -->
                 <div class="mb-3">
@@ -70,7 +78,7 @@
     </div>
 </div>
 
-
+<!-- Libreria utilizzata per la gestione barcode: QUAGGA-->
 <script src="https://cdn.jsdelivr.net/npm/@ericblade/quagga2/dist/quagga.min.js"></script>
 <script>
     const ufile = document.getElementById('ufile');
@@ -104,81 +112,82 @@
             }
         }
     );
+
+    document.getElementById('file-input').addEventListener('change', function(event) {
+        const fileList = document.getElementById('file-list');
+        const imagePreview = document.getElementById('image-preview');
+        
+        fileList.innerHTML = '';  // Pulisce la lista esistente
+        imagePreview.innerHTML = '';  // Pulisce l'anteprima delle immagini
+
+        if (this.files.length > 0) {
+            for (let i = 0; i < this.files.length; i++) {
+                const listItem = document.createElement('li');
+                listItem.textContent = this.files[i].name;
+                fileList.appendChild(listItem);
+
+                // Creazione di un oggetto URL per visualizzare l'anteprima dell'immagine
+                const img = document.createElement('img');
+                img.src = URL.createObjectURL(this.files[i]);
+                imagePreview.appendChild(img);
+            }
+        } else {
+            const noFileItem = document.createElement('li');
+            noFileItem.textContent = 'Nessun file selezionato';
+            fileList.appendChild(noFileItem);
+        }
+    });
 </script>
+
+<style>
+    .custom-file-upload {
+        display: inline-block;
+        padding: 8px 20px;
+        cursor: pointer;
+        border: 1px solid #666666;
+        border-radius: 8px;
+        background-color: #f1f1f1;
+        height: 50px;
+        line-height: 30px;
+        text-align: center;
+        font-size: 1rem;
+    }
+
+    .custom-file-upload:hover {
+        background-color: #e0e0e0;
+    }
+
+    .file-name {
+        display: block;
+        margin-top: 8px;
+        font-size: 0.875rem;
+        color: #666666;
+    }
+    .file-list {
+        margin-top: 8px;
+        font-size: 0.875rem;
+        color: #666666;
+        list-style-type: none;
+        padding-left: 0;
+    }
+
+    .file-list li {
+        margin-bottom: 5px;
+    }
+
+    .image-preview {
+        margin-top: 10px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+
+    .image-preview img {
+        max-width: 150px;
+        max-height: 150px;
+        object-fit: cover;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+    }
+</style>
 @endsection
-
-
-
-
-
-
-
-
-
-
-
-<!-- <script>
-
-------LIBRERIA QUAGGA-----
-    document.getElementById('startScan').addEventListener('click', () => {
-        const videoElement = document.getElementById('video');
-        const videoContainer = document.getElementById('video-container');
-        const barcodeInput = document.getElementById('barcode');
-        const stopScanButton = document.getElementById('stopScan');
-        const startScanButton = document.getElementById('startScan');
-
-        videoContainer.style.display = 'block'; // Mostra il video
-        stopScanButton.style.display = 'inline'; // Mostra il pulsante "Ferma scanner"
-        startScanButton.style.display = 'none'; // Nasconde il pulsante "Scansiona barcode"
-
-        Quagga.init({
-            inputStream: {
-                name: "Live",
-                type: "LiveStream",
-                target: videoElement, // Elemento video dove viene visualizzata la fotocamera
-                constraints: {
-                    width: 640,
-                    height: 480,
-                    facingMode: "environment" // Usa la fotocamera posteriore
-                },
-            },
-            decoder: {
-                readers: ["ean_reader", "code_128_reader"] // Specifica i tipi di codici a barre da scansionare
-            }
-        }, function (err) {
-            if (err) {
-                console.error(err);
-                alert('Errore nell\'inizializzazione di Quagga: ' + err);
-                return;
-            }
-            console.log("Iniziato Quagga con successo");
-            Quagga.start();
-        });
-
-        Quagga.onProcessed(function (result) {
-            const canvas = document.querySelector('canvas'); // Trova la canvas che Quagga usa
-            if (canvas) {
-                const ctx = canvas.getContext('2d', { willReadFrequently: true }); // Imposta il contesto 2D con willReadFrequently
-                console.log("Context impostato con willReadFrequently: true");
-            }
-        });
-
-        Quagga.onDetected(function (result) {
-            console.log('Codice scansionato: ', result.codeResult.code);
-            barcodeInput.value = result.codeResult.code;  // Inserisce il codice scansionato nell'input
-            Quagga.stop();  // Ferma lo scanner
-            videoContainer.style.display = 'none';  // Nasconde il video
-            stopScanButton.style.display = 'none';  // Nasconde il pulsante "Ferma scanner"
-            startScanButton.style.display = 'inline'; // Mostra di nuovo il pulsante "Scansiona barcode"
-        });
-    });
-
-    // Evento per fermare la scansione
-    document.getElementById('stopScan').addEventListener('click', () => {
-        Quagga.stop();  // Ferma lo scanner
-        document.getElementById('video-container').style.display = 'none';  // Nasconde il video
-        document.getElementById('stopScan').style.display = 'none';  // Nasconde il pulsante "Ferma scanner"
-        document.getElementById('startScan').style.display = 'inline'; // Mostra di nuovo il pulsante "Scansiona barcode"
-    });
-
-</script>
