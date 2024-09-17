@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
@@ -19,7 +18,8 @@ class BuyerController extends Controller
         // Validazione dei dati
         $validatedData = $request->validate([
             'barcode' => 'required|string|max:100',
-            'photo' => 'required',
+            'photo' => 'required|array',
+            'photo.*' => 'image|mimes:jpeg,png,jpg,gif', // Validazione dei file immagine
             'note' => 'required|string',
         ]);
 

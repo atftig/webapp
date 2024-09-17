@@ -28,12 +28,11 @@
 
                 <!-- ------------------------------------------BARCODE -->
                 <div class="mb-2">
-                    <label for="barcode" class="form-label d-flex " style="font-size: 1.6rem;">1) Aggiungi
-                        barcode:</label>
+                    <label for="barcode" class="form-label d-flex" style="font-size: 1.6rem;">1) Aggiungi barcode:</label>
 
                     <!-- Campo per inserire il barcode con foto (ean-13) -->
                     <label for="ufile" class="custom-file-upload">
-                        Scansiona barcode 
+                        Scansiona barcode
                     </label>
                     <input type="file" name="ufile" id="ufile" style="display: none;">
 
@@ -41,24 +40,29 @@
                     <!-- inserimento manuale del barcode -->
                     <input type="text" class="form-control mt-2" id="x" name="barcode" placeholder="Inserisci barcode"
                         style="border: 1px solid #666666; border-radius: 8px; height:50px">
-
                 </div>
 
                 <!-- ------------------------------------------AGGIUNGI FOTO -->
-               
-                <div class="mb-2 ">
-                <label for="photo" class="form-label d-flex" style="font-size: 1.6rem;">2) Aggiungi foto:</label>
-                    <label for="file-input" class="custom-file-upload">
-                        Seleziona foto
-                    </label>
-                    <input id="file-input" class="form-control" name="photo[]" type="file" multiple
-                        style="display: none;" required>
-                    <ul id="file-list" class="file-list">
-                        <li>Nessun file selezionato</li>
-                    </ul>
-                    <div id="image-preview" class="image-preview"></div>
+                <div id="file-inputs-container">
+                    <div class="mb-2">
+                        <label for="photo" class="form-label d-flex" style="font-size: 1.6rem;">2) Aggiungi foto:</label>
+                        <label for="file-input-1" class="custom-file-upload">
+                            Seleziona/scatta foto
+                        </label>
+                        <input id="file-input-1" class="form-control" name="photo[]" type="file" style="display: none;" required>
+                        <ul id="file-list-1" class="file-list">
+                            <li>Nessun file selezionato</li>
+                        </ul>
+                        <div id="image-preview-1" class="image-preview"></div>
+                    </div>
                 </div>
 
+                <!-- Pulsante per aggiungere un'altra foto -->
+                <div id="add-photo-container" style="display: none;">
+                    <button type="button" id="add-photo-btn" class="btn btn-secondary mt-2">
+                        Aggiungi altra foto
+                    </button>
+                </div>
 
                 <!-----------------------------------------------NOTA -->
                 <div class="mb-3">
@@ -78,64 +82,100 @@
     </div>
 </div>
 
-<!-- Libreria utilizzata per la gestione barcode: QUAGGA-->
+<!-- Libreria utilizzata per la gestione barcode: QUAGGA -->
 <script src="https://cdn.jsdelivr.net/npm/@ericblade/quagga2/dist/quagga.min.js"></script>
 <script>
+    // Gestione del barcode scanner
     const ufile = document.getElementById('ufile');
+    ufile.addEventListener('change', function(event) {
+        let reader = new FileReader();
+        reader.readAsDataURL(ufile.files[0]);
 
-    ufile.addEventListener(
-        'change',
-        (event) => {
-            let reader = new FileReader();
-            reader.readAsDataURL(ufile.files[0]);
+        reader.onload = () => {
+            const content = reader.result;
 
-            reader.onload = () => {
-                const content = reader.result;
-
-                Quagga.decodeSingle(
-                    {
-                        src: content,
-                        locate: true,
-                        decoder: {
-                            readers: ["ean_reader"]
-                        }
-                    },
-                    function (result) {
-                        if (result.codeResult) {
-                            console.log("result", result.codeResult.code);
-                            document.getElementById('x').value = result.codeResult.code;
-                        } else {
-                            console.log("not detected");
-                        }
+            Quagga.decodeSingle(
+                {
+                    src: content,
+                    locate: true,
+                    decoder: {
+                        readers: ["ean_reader"]
                     }
-                )
-            }
+                },
+                function(result) {
+                    if (result.codeResult) {
+                        console.log("result", result.codeResult.code);
+                        document.getElementById('x').value = result.codeResult.code;
+                    } else {
+                        console.log("not detected");
+                    }
+                }
+            )
         }
-    );
+    });
 
-    document.getElementById('file-input').addEventListener('change', function(event) {
-        const fileList = document.getElementById('file-list');
-        const imagePreview = document.getElementById('image-preview');
+    // Funzione per aggiornare la lista di file selezionati e l'anteprima delle immagini
+    function updateFileList(event, counter) {
+        const fileList = event.target.files;
+        const fileListContainer = document.getElementById(`file-list-${counter}`);
+        const imagePreviewContainer = document.getElementById(`image-preview-${counter}`);
         
-        fileList.innerHTML = '';  // Pulisce la lista esistente
-        imagePreview.innerHTML = '';  // Pulisce l'anteprima delle immagini
+        fileListContainer.innerHTML = '';  // Pulisce la lista precedente
+        imagePreviewContainer.innerHTML = '';  // Pulisce l'anteprima delle immagini
 
-        if (this.files.length > 0) {
-            for (let i = 0; i < this.files.length; i++) {
-                const listItem = document.createElement('li');
-                listItem.textContent = this.files[i].name;
-                fileList.appendChild(listItem);
+        if (fileList.length === 0) {
+            fileListContainer.innerHTML = '<li>Nessun file selezionato</li>';
+        } else {
+            for (let i = 0; i < fileList.length; i++) {
+                const li = document.createElement('li');
+                li.textContent = fileList[i].name;
+                fileListContainer.appendChild(li);
 
                 // Creazione di un oggetto URL per visualizzare l'anteprima dell'immagine
                 const img = document.createElement('img');
-                img.src = URL.createObjectURL(this.files[i]);
-                imagePreview.appendChild(img);
+                img.src = URL.createObjectURL(fileList[i]);
+                img.style.width = '100px';  // Imposta la dimensione dell'anteprima
+                img.style.height = '100px';
+                imagePreviewContainer.appendChild(img);
             }
-        } else {
-            const noFileItem = document.createElement('li');
-            noFileItem.textContent = 'Nessun file selezionato';
-            fileList.appendChild(noFileItem);
         }
+    }
+
+    // Gestione del primo input per le foto
+    document.getElementById('file-input-1').addEventListener('change', function(event) {
+        updateFileList(event, 1);
+
+        // Mostra il pulsante per aggiungere un'altra foto dopo aver selezionato la prima
+        document.getElementById('add-photo-container').style.display = 'block';
+    });
+
+    // Gestione del pulsante per aggiungere un'altra foto
+    document.getElementById('add-photo-btn').addEventListener('click', function() {
+        const newCounter = document.querySelectorAll('[id^=file-input-]').length + 1;
+
+        let newInputDiv = document.createElement('div');
+        newInputDiv.classList.add('mb-2');
+        newInputDiv.id = `photo-input-${newCounter}`;
+
+        newInputDiv.innerHTML = `
+            <label for="file-input-${newCounter}" class="form-label d-flex" style="font-size: 1.6rem;">Aggiungi foto:</label>
+            <label for="file-input-${newCounter}" class="custom-file-upload">
+                Seleziona/scatta foto
+            </label>
+            <input id="file-input-${newCounter}" class="form-control" name="photo[]" type="file" style="display: none;" required>
+            <ul id="file-list-${newCounter}" class="file-list">
+                <li>Nessun file selezionato</li>
+            </ul>
+            <div id="image-preview-${newCounter}" class="image-preview"></div>
+        `;
+
+        document.getElementById('file-inputs-container').appendChild(newInputDiv);
+
+        // Aggiungi l'evento per il nuovo input
+        let fileInput = document.getElementById(`file-input-${newCounter}`);
+        fileInput.addEventListener('change', function(event) {
+            updateFileList(event, newCounter);
+        });
     });
 </script>
 
@@ -157,12 +197,6 @@
         background-color: #e0e0e0;
     }
 
-    .file-name {
-        display: block;
-        margin-top: 8px;
-        font-size: 0.875rem;
-        color: #666666;
-    }
     .file-list {
         margin-top: 8px;
         font-size: 0.875rem;
