@@ -78,6 +78,7 @@ return [
             'sslmode' => 'prefer',
         ],
 
+        // configurazione per sql server
         'sqlsrv' => [
             'driver' => 'sqlsrv',
             'url' => env('DATABASE_URL'),
@@ -91,6 +92,20 @@ return [
             'prefix_indexes' => true,
             // 'encrypt' => env('DB_ENCRYPT', 'yes'),
             // 'trust_server_certificate' => env('DB_TRUST_SERVER_CERTIFICATE', 'false'),
+        ],
+        
+        'Intranet' => [
+            'driver' => 'sqlsrv',
+            'host' => env('SQLSRV_DB_HOST', ''),
+            'port' => env('SQLSRV_DB_PORT', ''),
+            'database' => 'Intranet',
+            'username' => env('SQLSRV_DB_USERNAME', ''),
+            'password' => env('SQLSRV_DB_PASSWORD', ''),
+            'charset' => 'utf8',
+            'prefix' => '',
+            'collation' => 'utf8_unicode_ci',
+            'strict' => false,
+            'engine' => null
         ],
 
     ],

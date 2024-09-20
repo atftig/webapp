@@ -6,6 +6,7 @@ use App\Models\ProductDetail;
 use App\Models\ProductMedia;
 use Illuminate\Support\Facades\Log;
 
+
 class BuyerController extends Controller
 {
     public function index()
@@ -33,6 +34,7 @@ class BuyerController extends Controller
         $productDetail->barcode = $validatedData['barcode'];
         $productDetail->note = $validatedData['note'];
         $productDetail->save();
+
 
         // Array per memorizzare i nomi dei file salvati
         $fileNames = [];

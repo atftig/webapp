@@ -8,7 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
-class User extends Authenticatable
+class UserIntranet extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
@@ -42,5 +42,5 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
-    // protected $connection = 'Intranet';  // per connettere a sql server
+    protected $connection = 'Intranet';  // per connettere a sql server
 }

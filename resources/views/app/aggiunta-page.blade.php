@@ -42,11 +42,11 @@
 
         <!-- Mostriamo i dettagli dell'articolo -->
         <div class="text-center mb-4">
-            <p class="fw-bold">Barcode:</p>
+            <h3 class="fw-bold">Barcode:</h3>
             <p>{{ session('barcode') }}</p>
 
             <!-- Foto del prodotto -->
-            <p class="fw-bold">Foto:</p>
+            <h3 class="fw-bold">Foto:</h3>
             <div class="row g-2 justify-content-center">
                 @if(session('photos'))
                     @foreach (session('photos') as $photo)
@@ -59,7 +59,7 @@
             </div>
 
             <!-- Note del prodotto -->
-            <p class="fw-bold mt-4">Note:</p>
+            <h3 class="fw-bold mt-4">Note:</h3>
             <p>{{ session('note') }}</p>
         </div>
 

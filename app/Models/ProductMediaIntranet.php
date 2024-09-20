@@ -5,12 +5,12 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 use Illuminate\Database\Eloquent\Model;
 
-class ProductMedia extends Model
+class ProductMediaIntranet extends Model
 {
 
     use HasFactory;
     protected $table = 'product_media';       //nome tabella
-    // protected $connection = 'Intranet';  // per connettere a sql server
+    protected $connection = 'Intranet';  // per connettere a sql server
 
     public $timestamps = false;
     protected $fillable = [
