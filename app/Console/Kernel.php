@@ -16,7 +16,6 @@ class Kernel extends ConsoleKernel
     {
         $schedule->job(new Heartbeat)->everyFiveMinutes();
     }
-    }
 
 
     /**
