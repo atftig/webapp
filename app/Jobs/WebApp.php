@@ -29,6 +29,7 @@ class WebApp implements ShouldQueue
     // x è un file esterno, che nel nostro caso è un servizio chiamato WebappService
      public function handle(WebappService $service): void
     {
+        // esegue la logica per copiare i dati
         $service->Webapp();
     }
 }

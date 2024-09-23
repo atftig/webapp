@@ -14,7 +14,6 @@ class ProductMediaIntranet extends Model
 
     public $timestamps = false;
     protected $fillable = [
-        // 'id',
         'barcode',
         'photo',
         'estensione'       // Estensione del file (es. .jpeg, .jpg, .png)
