@@ -9,9 +9,9 @@ class ProductDetailIntranet extends Model
 {
 
     use HasFactory;
-    protected $table = 'product_details';       //nome tabella
-
+    
     protected $connection = 'Intranet';  // per connettere a sql server
+    protected $table = 'product_details';       //nome tabella
     public $timestamps = false;
     protected $fillable = [
         'barcode',

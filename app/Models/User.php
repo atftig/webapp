@@ -44,4 +44,6 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
     // protected $connection = 'Intranet';  // per connettere a sql server
+    protected $connection = 'mysql';
+    protected $table = 'users';
 }

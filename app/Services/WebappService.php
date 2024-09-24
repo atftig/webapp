@@ -8,6 +8,7 @@ use App\Models\ProductDetailIntranet;
 use App\Models\ProductMedia;
 use App\Models\ProductDetail;
 use App\Models\User;
+use Illuminate\Support\Facades\Log;
 // use Illuminate\Support\Facades\DB;
 
 /**
@@ -15,8 +16,6 @@ use App\Models\User;
  */
 class WebappService
 {
-
-
     public function Webapp()
     {
 
@@ -24,12 +23,15 @@ class WebappService
         $webappMedia = ProductMedia::all();
         $webappDetail = ProductDetail::all();
         $webappUser = User::all();
+        Log::info($webappMedia);
+        Log::info($webappDetail);
+        Log::info($webappUser);
 
         // return $webappMedia;
        
         // Esegui l'insert dei dati nel database SQL Server (Intranet)
         foreach ($webappDetail as $detail) {
-            ProductDetailIntranet::on('Intranet')->create([
+            ProductDetailIntranet::create([
                 'id' => $detail->id,
                 'name' => $detail->name,
                 'description' => $detail->description,
@@ -37,7 +39,7 @@ class WebappService
         }
 
         foreach ($webappMedia as $media) {
-            ProductMediaIntranet::on('Intranet')->create([
+            ProductMediaIntranet::create([
                 'id' => $media->id,
                 'product_id' => $media->product_id,
                 'url' => $media->url,
@@ -45,7 +47,7 @@ class WebappService
         }
 
         foreach ($webappUser as $user) {
-            UserIntranet::on('Intranet')->create([
+            UserIntranet::create([
                 'id' => $user->id,
                 'name' => $user->name,
                 'email' => $user->email,

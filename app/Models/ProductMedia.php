@@ -9,6 +9,7 @@ class ProductMedia extends Model
 {
 
     use HasFactory;
+    protected $connection = 'mysql';
     protected $table = 'product_media';       //nome tabella
     // protected $connection = 'Intranet';  // per connettere a sql server
 
