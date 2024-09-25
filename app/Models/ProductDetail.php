@@ -16,7 +16,6 @@ class ProductDetail extends Model
     public $timestamps = false;
     protected $fillable = [
         'barcode',
-        // 'photo',
         'note',
     ];
 }

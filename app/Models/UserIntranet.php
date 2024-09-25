@@ -8,8 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Database\Eloquent\Model;
-
-class UserIntranet extends Authenticatable
+ class UserIntranet extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
@@ -20,7 +19,6 @@ class UserIntranet extends Authenticatable
      */
     protected $fillable = [
         'name',
-        'email',
         'password',
     ];
 

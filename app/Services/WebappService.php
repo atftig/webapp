@@ -18,42 +18,50 @@ class WebappService
 {
     public function Webapp()
     {
+        try {
+            // Ottiene i dati dal database MySQL
+            $webappMedia = ProductMedia::all();
+            $webappDetail = ProductDetail::all();
+            $webappUser = User::all();
 
-        //Ottieni i dati dal database MySQL
-        $webappMedia = ProductMedia::all();
-        $webappDetail = ProductDetail::all();
-        $webappUser = User::all();
-        Log::info($webappMedia);
-        Log::info($webappDetail);
-        Log::info($webappUser);
+            Log::info("ciao");
 
-        // return $webappMedia;
-       
-        // Esegui l'insert dei dati nel database SQL Server (Intranet)
-        foreach ($webappDetail as $detail) {
-            ProductDetailIntranet::create([
-                'id' => $detail->id,
-                'name' => $detail->name,
-                'description' => $detail->description,
-            ]);
+            // Esegui l'insert dei dati nel database SQL Server (Intranet)
+            foreach ($webappDetail as $detail) {
+                Log::info($detail->toArray());
+                if (empty($detail->barcode) || empty($detail->note)) {
+                    Log::warning('Record non valido:', $detail->toArray());
+                    continue;  // Salta record non valido
+                }
+
+                ProductDetailIntranet::create([
+                    'barcode' => $detail->barcode,
+                    'note' => $detail->note,
+                    'created_at' => $detail->created_at ?? now(),
+                ]);
+            }
+
+            foreach ($webappMedia as $media) {
+
+                ProductMediaIntranet::create([
+                    'id' => $media->id,
+                    'barcode' => $media->barcode,
+                    'photo' => $media->photo,
+                    'estensione' => $media->estensione,
+                ]);
+            }
+
+            foreach ($webappUser as $user) {
+                UserIntranet::create([
+                    'name' => $user->name,
+                    'password' => $user->password, 
+                ]);
+            }
+
+            Log::info('Dati inseriti con successo nel database Intranet');
+            return "Dati inseriti con successo nel database Intranet";
+        } catch (\Exception $e) {
+            Log::error($e->getMessage());
         }
-
-        foreach ($webappMedia as $media) {
-            ProductMediaIntranet::create([
-                'id' => $media->id,
-                'product_id' => $media->product_id,
-                'url' => $media->url,
-            ]);
-        }
-
-        foreach ($webappUser as $user) {
-            UserIntranet::create([
-                'id' => $user->id,
-                'name' => $user->name,
-                'email' => $user->email,
-            ]);
-        }
-
-        return "Dati inseriti con successo nel database Intranet";
     }
 }
