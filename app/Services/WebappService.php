@@ -29,17 +29,31 @@ class WebappService
             // Esegui l'insert dei dati nel database SQL Server (Intranet)
             foreach ($webappDetail as $detail) {
                 Log::info($detail->toArray());
+            
                 if (empty($detail->barcode) || empty($detail->note)) {
                     Log::warning('Record non valido:', $detail->toArray());
                     continue;  // Salta record non valido
                 }
-
-                ProductDetailIntranet::create([
-                    'barcode' => $detail->barcode,
-                    'note' => $detail->note,
-                    'created_at' => $detail->created_at ?? now(),
-                ]);
+            
+                // Controlla se il barcode esiste già
+                $existingDetail = ProductDetailIntranet::where('barcode', $detail->barcode)->first();
+                if ($existingDetail) {
+                    Log::info("Il barcode già esiste: {$detail->barcode}. Salta l'inserimento.");
+                    continue; // Salta l'inserimento
+                }
+            
+                // Inserisci il record
+                try {
+                    ProductDetailIntranet::create([
+                        'barcode' => $detail->barcode,
+                        'note' => $detail->note,
+                        'created_at' => $detail->created_at ?? now(),
+                    ]);
+                } catch (\Exception $e) {
+                    Log::error("Errore durante l'inserimento: {$e->getMessage()}");
+                }
             }
+            
 
             foreach ($webappMedia as $media) {
 
