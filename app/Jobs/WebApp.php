@@ -30,6 +30,6 @@ class WebApp implements ShouldQueue
      public function handle(WebappService $service): void
     {
         // esegue la logica per copiare i dati
-        $service->Webapp();
+        $service->webapp();
     }
 }

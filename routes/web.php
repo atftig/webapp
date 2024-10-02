@@ -34,6 +34,18 @@ Route::post('/aggiungi-prodotto', [BuyerController::class, 'store'])->name('stor
 Route::get('login', [AuthenticatedSessionController::class, 'create'])->name('login');
 Route::post('login', [AuthenticatedSessionController::class, 'store']);
 
+
+//ROTTE PER PROGETTO ISPETTORI
+// Route per la pagina pv-page
+Route::get('/pv-page', function () {
+    return view('app.pv-page');
+})->name('pv-page');
+
+
+// Route per il login
+// Route::get('login', [AuthenticatedSessionController::class, 'create'])->name('login');
+// Route::post('login', [AuthenticatedSessionController::class, 'store']);
+
 // Route per la dashboard
 Route::get('/dashboard', function () {
     return view('dashboard');

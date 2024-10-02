@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Log;
  */
 class WebappService
 {
-    public function Webapp()
+    public function webapp()
     {
         try {
             // Ottiene i dati dal database MySQL
