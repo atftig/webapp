@@ -5,6 +5,8 @@ services:
     image: srvgit.intosano.it:5050/intranet/dockerfiles/php8-laravel-10:1.0-prod-xdebug-20240130
     container_name: webapp
     network_mode: "bridge"
+    environment:
+      - TZ=Europe/Rome
     volumes:
       - .:/var/www/html
     ports:

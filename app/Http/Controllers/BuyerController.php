@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\ProductDetail;
 use App\Models\ProductMedia;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use App\Models\ProductIspettori;
+use App\Models\ProductDetailIspettori;
 
 
 class BuyerController extends Controller
@@ -64,4 +67,28 @@ class BuyerController extends Controller
             'note' => $productDetail->note,
         ]);
     }
+
+    // ---------------------------------ISPETTORI-----------------------------------------------------------------------
+
+
+    public function storePv(Request $request)
+    {
+        // Validazione dei dati del form
+        $validatedData = $request->validate([
+            'insegna' => 'required|string|max:50|unique:product_ispettori,insegna',
+            'pv' => 'required|string|max:50',
+        ]);
+
+        // Creazione di un nuovo record nella tabella 'product_ispettori'
+        ProductIspettori::create([
+            'insegna' => $validatedData['insegna'],
+            'pv' => $validatedData['pv'],
+            'created_at' => now(),  // Imposta la data di creazione
+        ]);
+
+        // Reindirizzamento dopo il salvataggio con un messaggio di successo
+        return redirect()->route('homepage')->with('success', 'Dati salvati con successo!');
+    }
+
+
 }

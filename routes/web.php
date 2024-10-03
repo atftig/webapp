@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\IspettoriController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AddController;
@@ -22,10 +23,11 @@ Route::get('/home', function () {
     return view('app.homepage');
 })->name('homepage');
 
-// Route per la pagina di aggiunta
+// Route per la pagina di aggiunta (GET)
 Route::get('/aggiunta-page', function () {
     return view('app.aggiunta-page');
 })->name('aggiunta-page');
+
 
 // Route per la pagina di aggiunta (POST)
 Route::post('/aggiungi-prodotto', [BuyerController::class, 'store'])->name('store-product');
@@ -35,12 +37,37 @@ Route::get('login', [AuthenticatedSessionController::class, 'create'])->name('lo
 Route::post('login', [AuthenticatedSessionController::class, 'store']);
 
 
-//ROTTE PER PROGETTO ISPETTORI
+//-----------------------ROTTE PER PROGETTO ISPETTORI------------------------------------------------
 // Route per la pagina pv-page
 Route::get('/pv-page', function () {
     return view('app.pv-page');
 })->name('pv-page');
 
+
+// Route per il form di inserimento insegna e pv
+Route::post('/store-pv', [BuyerController::class, 'storePv'])->name('store-pv');
+
+Route::get('/home-ispettori', function(){
+    return view('app.homepage-ispettori');
+})->name('home-ispettori');
+
+
+
+
+
+Route::post('/store-product', [IspettoriController::class, 'storeDetails'])->name('store-product');
+Route::post('/store-buyer', [BuyerController::class, 'storeDetails'])->name('store-buyer');
+
+
+Route::get('/aggiunta-page-ispettori', function () {
+    return view('app.aggiunta-page-ispettori');
+})->name('aggiunta-page-ispettori');
+
+
+
+
+
+//-----------------------FINE ROTTE PER PROGETTO ISPETTORI------------------------------------------------
 
 // Route per il login
 // Route::get('login', [AuthenticatedSessionController::class, 'create'])->name('login');
