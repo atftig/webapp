@@ -8,7 +8,7 @@ class IspettoriController extends Controller
 {
     public function index()
     {
-
+        return view('app.homepage-ispettori');
     }
 
     // ---------------------------------ISPETTORI-----------------------------------------------------------------------
@@ -22,25 +22,31 @@ class IspettoriController extends Controller
             'foto.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048', // Regola per le singole foto
             'note' => 'nullable|string|max:100', // Note facoltative
         ]);
-    
+
         // Salvataggio dei dettagli del prodotto
         $productDetail = ProductDetailIspettori::create([
             'barcode' => $validatedData['barcode'],
             'prezzo' => $validatedData['prezzo'],
             'note' => $validatedData['note'] ?? null, // Assegna null se non ci sono note
         ]);
-    
+
+
+        // Salva i dettagli nella sessione
+        session(['barcode' => $productDetail->barcode]);
+        session(['prezzo' => $validatedData['prezzo']]);
+        session(['note' => $validatedData['note'] ?? null]);
+
         // Logica per il salvataggio delle foto
         if ($request->hasFile('foto')) {
             foreach ($request->file('foto') as $file) {
-                // Salva il file e associalo al prodotto
+                // Salva il file e associa al prodotto
                 $path = $file->store('images', 'public'); // Salva nella cartella 'storage/app/public/images'
-                
+
                 // Se hai una relazione immagini, puoi salvare il percorso:
                 $productDetail->images()->create(['path' => $path]);
             }
         }
-    
-        return redirect()->route('aggiunta-page');
+
+        return redirect()->route('aggiunta-page-ispettori');
     }
-}    
+}

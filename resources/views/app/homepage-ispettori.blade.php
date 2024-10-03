@@ -13,7 +13,7 @@
         <div class="card-body p-3">
             <h2 class="text-center mb-2 blue_color" style="font-size: 2.5rem;">Aggiungi dettagli ispezione</h2>
 
-            <form action="{{ route('store-product') }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('store-ispettore') }}" method="POST" enctype="multipart/form-data">
                 @csrf
 
                 <!-- Errori di validazione -->

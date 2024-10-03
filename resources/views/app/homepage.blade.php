@@ -40,7 +40,7 @@
                     <p class="mt-2">oppure</p>
                     <!-- inserimento manuale del barcode -->
                     <input type="text" class="form-control mt-2" id="x" name="barcode" placeholder="Inserisci barcode"
-                        style="border: 1px solid #666666; border-radius: 8px; height:50px">
+                        style="border: 1px solid #666666; border-radius: 8px; height:50px" required>
                 </div>
 
                 <!-- ------------------------------------------AGGIUNGI FOTO -->

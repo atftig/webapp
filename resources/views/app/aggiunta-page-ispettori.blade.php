@@ -19,6 +19,7 @@
                     data-bs-toggle="dropdown" aria-expanded="false">
                     BUYER <i class="fa-solid fa-user"></i>
                 </button>
+                <!--------------------------------------------------------- LOGOUT DISABLED----------------------->
                 <ul class="dropdown-menu" aria-labelledby="buyerDropdown">
                     <li>
                         <a href="{{ route('logout') }}" class="dropdown-item text-danger disabled"
@@ -28,6 +29,7 @@
                     </li>
                 </ul>
             </div>
+            <!--------------------------------------------------------- /LOGOUT DISABLED----------------------->
             <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                 @csrf
             </form>
@@ -36,7 +38,7 @@
 
     <div class="text-center mb-5">
         <h1 class="h4 fw-bold text-primary mb-4">
-            Dettaglio aggiunto con successo <br>
+            Dettaglio ISPEZIONE aggiunto con successo <br>
             <i class="fa-solid fa-check text-success mt-3" style="font-size: 2rem;"></i>
         </h1>
 
@@ -45,27 +47,18 @@
             <h3 class="fw-bold">Barcode:</h3>
             <p>{{ session('barcode') }}</p>
 
-            <!-- Foto del prodotto -->
-            <h3 class="fw-bold">Foto:</h3>
+            <!-- prezzo del prodotto -->
+            <h3 class="fw-bold">Prezzo:</h3>
             <div class="row g-2 justify-content-center">
-                @if(session('photos'))
-                    @foreach (session('photos') as $photo)
-                        <div class="col-6 col-sm-4 col-md-3">
-                            <img src="{{ asset('images/' . $photo) }}" alt="foto" class="img-fluid rounded"
-                                style="width: 100%; height: auto; max-height: 150px; object-fit: cover;">
-                        </div>
-                    @endforeach
-                @endif
+                <p>{{ session('prezzo')}}</p>
             </div>
 
-            <!-- Note del prodotto -->
-            <h3 class="fw-bold mt-4">Note:</h3>
-            <p>{{ session('note') }}</p>
-        </div>
+            <!-- <h3 class="fw-bold">Note:</h3>
+            <p>{{ session('note') ?? 'Nessuna nota fornita' }}</p>  -->
 
-        <a href="{{ route('home-ispettori') }}" class="btn btn-primary" style="font-size: 1.4rem; padding: 1rem;">
-            Aggiungi un altro prodotto
-        </a>
+            <a href="{{route('homepage-ispettori')}}" class="btn btn-primary" style="font-size: 1.4rem; padding: 1rem;">
+                Aggiungi un altro prodotto
+            </a>
+        </div>
     </div>
-</div>
-@endsection
+    @endsection

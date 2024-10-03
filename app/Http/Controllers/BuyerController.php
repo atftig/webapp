@@ -87,7 +87,7 @@ class BuyerController extends Controller
         ]);
 
         // Reindirizzamento dopo il salvataggio con un messaggio di successo
-        return redirect()->route('homepage')->with('success', 'Dati salvati con successo!');
+        return redirect()->route('home-ispettori')->with('success', 'Dati salvati con successo!');
     }
 
 
