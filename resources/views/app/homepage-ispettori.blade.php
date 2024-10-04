@@ -5,7 +5,9 @@
 <div class="container mt-4">
     <!-------------------------------------------------------- LOGO TOSANO -->
     <div class="text-center mb-2">
-        <img src="{{ asset('storage/logo/logo.png') }}" alt="Logo" class="img-fluid" style="max-width: 230px;">
+        <a href="{{route('pv-page')}}">
+            <img src="{{ asset('storage/logo/logo.png') }}" alt="Logo" class="img-fluid" style="max-width: 230px;">
+        </a>
     </div>
 
     <!-------------------------------------------------------- FORM DI AGGIUNTA DETTAGLIO -->

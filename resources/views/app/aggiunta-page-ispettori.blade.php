@@ -13,7 +13,9 @@
 <div class="container-fluid mt-3 bg-white p-3">
     <div class="text-center mb-4">
         <div class="d-flex justify-content-center align-items-center">
-            <img src="{{ asset('storage/logo/logo.png') }}" alt="Logo" class="img-fluid" style="max-width: 150px;">
+            <a href="{{route('pv-page')}}">
+                <img src="{{ asset('storage/logo/logo.png') }}" alt="Logo" class="img-fluid" style="max-width: 150px;">
+            </a>
             <div class="dropdown ms-4">
                 <button class="btn btn-outline-primary dropdown-toggle" type="button" id="buyerDropdown"
                     data-bs-toggle="dropdown" aria-expanded="false">

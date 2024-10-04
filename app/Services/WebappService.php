@@ -23,6 +23,7 @@ class WebappService
 {
     public function webapp()
     {
+        
         try {
             // Ottiene i dati dal database MySQL
             $webappMedia = ProductMedia::all();
@@ -73,12 +74,43 @@ class WebappService
                 ]);
             }
 
+            // foreach ($webappUser as $user) {
+            //     dump('user');
+            //     UserIntranet::updateOrCreate([
+            //         'name' => $user->name,
+            //         'password' => $user->password, 
+            //         'ruolo' => $user->ruolo,
+            //     ],[
+            //         'name' => $user->name,
+            //         'password' => $user->password, 
+            //         'ruolo' => $user->ruolo,
+            //     ]);
+            // }
+
             foreach ($webappUser as $user) {
-                UserIntranet::create([
-                    'name' => $user->name,
-                    'password' => $user->password, 
-                ]);
+                // Controlla se l'utente esiste già nella tabella dbo.users
+                $existingUser = UserIntranet::where('name', $user->name)->first();
+            
+                if ($existingUser) {
+                    Log::info("L'utente {$user->name} esiste già. Salto l'inserimento.");
+                    continue; // Salta l'inserimento se l'utente esiste già
+                }
+            
+                try {
+                    // Inserisci il nuovo utente solo se non esiste
+                    UserIntranet::create([
+                        'name' => $user->name,
+                        'password' => $user->password,
+                        'ruolo' => $user->ruolo,  // Assicurati che il campo ruolo sia presente
+                    ]);
+                    Log::info("Inserito nuovo utente {$user->name} con successo.");
+                } catch (\Exception $e) {
+                    Log::error("Errore durante l'inserimento dell'utente {$user->name}: {$e->getMessage()}");
+                }
             }
+            
+            
+            
 
             foreach ($webappDetailIspettori as $detailI) {
                 ProductDetailIspettoriIntranet::create([
@@ -91,9 +123,9 @@ class WebappService
             }
 
             foreach ($webappIspettori as $ispettori) {
-                ProductDetailIspettoriIntranet::create([
-                    'insegna' => $ispettori->barcode,
-                    'pv' => $ispettori->prezzo, 
+                ProductIspettoriIntranet::create([
+                    'insegna' => $ispettori->insegna,
+                    'pv' => $ispettori->pv, 
                     'created_at' => $ispettori->created_at ?? now(),
                 ]);
             }
@@ -101,6 +133,8 @@ class WebappService
             Log::info('Dati inseriti con successo nel database Intranet');
             return "Dati inseriti con successo nel database Intranet";
         } catch (\Exception $e) {
+            dump($e->getMessage());
+
             Log::error($e->getMessage());
         }
     }

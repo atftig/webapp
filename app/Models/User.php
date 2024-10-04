@@ -46,4 +46,6 @@ class User extends Authenticatable
     // protected $connection = 'Intranet';  // per connettere a sql server
     protected $connection = 'mysql';
     protected $table = 'users';
+
+    public $timestamps = false;
 }

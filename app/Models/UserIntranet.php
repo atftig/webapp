@@ -44,4 +44,5 @@ use Illuminate\Database\Eloquent\Model;
     ];
     protected $connection = 'Intranet';  // per connettere a sql server
     protected $table = 'users';
+    public $timestamps = false;
 }
