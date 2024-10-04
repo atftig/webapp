@@ -79,14 +79,22 @@ class BuyerController extends Controller
             'pv' => 'required|string|max:50',
         ]);
 
-        $validatedData = $request->input();
+        // $validatedData = $request->input();
 
         // Creazione di un nuovo record nella tabella 'product_ispettori'
-        ProductIspettori::updateOrCreate([
-            'insegna' => $validatedData['insegna'],
-            'pv' => $validatedData['pv'],
-            'created_at' => now(),  // Imposta la data di creazione
-        ]);
+        ProductIspettori::updateOrCreate(
+            [
+                'insegna' => $validatedData['insegna'],
+                'pv' => $validatedData['pv'],
+            ],
+            [
+                'created_at' => now(),  // Imposta la data di creazione
+            ]
+        );
+
+        // Salva i dati nella sessione
+        session(['insegna' => $validatedData['insegna']]);
+        session(['pv' => $validatedData['pv']]);
 
         // Reindirizzamento dopo il salvataggio con un messaggio di successo
         return redirect()->to('/homepage-ispettori')->with('success', 'Dati salvati con successo!');

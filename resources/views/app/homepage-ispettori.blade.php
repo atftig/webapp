@@ -11,6 +11,21 @@
     <!-------------------------------------------------------- FORM DI AGGIUNTA DETTAGLIO -->
     <div class="mx-auto">
         <div class="card-body p-3">
+
+
+
+         <!-- Mostriamo i dettagli dell'articolo -->
+         <div class="text-center mb-4">
+            <h2 class="fw-bold">Insegna:</h2>
+            <p>{{ session('insegna') }}</p>
+
+            <!-- prezzo del prodotto -->
+            <h2 class="fw-bold">Punto Vendita:</h2>
+            <div class="row g-2 justify-content-center">
+                <p>{{ session('pv')}}</p>
+            </div>
+        </div>
+
             <h2 class="text-center mb-2 blue_color" style="font-size: 2.5rem;">Aggiungi dettagli ispezione</h2>
 
             <form action="{{ route('store-ispettore') }}" method="POST" enctype="multipart/form-data">

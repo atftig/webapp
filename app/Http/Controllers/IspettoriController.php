@@ -28,7 +28,9 @@ class IspettoriController extends Controller
             'barcode' => $validatedData['barcode'],
             'prezzo' => $validatedData['prezzo'],
             'note' => $validatedData['note'] ?? null, // Assegna null se non ci sono note
-        ]);
+            'created_at' => now(),  // Imposta la data di creazione
+        ]
+    );
 
 
         // Salva i dettagli nella sessione

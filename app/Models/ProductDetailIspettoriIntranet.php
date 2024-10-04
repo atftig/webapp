@@ -5,11 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class ProductDetailIspettori extends Model
+class ProductDetailIspettoriIntranet extends Model
 {
     use HasFactory;
 
-    protected $connection = 'mysql';
+    protected $connection = 'Intranet';
     public $timestamps = false;
 
     protected $table = 'product_details_ispettori';  // Nome della tabella

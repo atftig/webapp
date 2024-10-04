@@ -20,6 +20,7 @@ use Illuminate\Database\Eloquent\Model;
     protected $fillable = [
         'name',
         'password',
+        'ruolo',  // Aggiunto
     ];
 
     /**

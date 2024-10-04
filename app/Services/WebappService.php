@@ -1,13 +1,18 @@
 <?php
 
 namespace App\Services;
-
+// ------------------------------buyer------------
 use App\Models\ProductMediaIntranet;
 use App\Models\UserIntranet;
 use App\Models\ProductDetailIntranet;
 use App\Models\ProductMedia;
 use App\Models\ProductDetail;
 use App\Models\User;
+// ------------------------------ispettori------------
+use App\Models\ProductDetailIspettori;
+use App\Models\ProductDetailIspettoriIntranet;
+use App\Models\ProductIspettori;
+use App\Models\ProductIspettoriIntranet;
 use Illuminate\Support\Facades\Log;
 // use Illuminate\Support\Facades\DB;
 
@@ -23,6 +28,9 @@ class WebappService
             $webappMedia = ProductMedia::all();
             $webappDetail = ProductDetail::all();
             $webappUser = User::all();
+            $webappDetailIspettori = ProductDetailIspettori::all();
+            $webappIspettori = ProductIspettori::all();
+            
 
             Log::info("ciao");
 
@@ -69,6 +77,24 @@ class WebappService
                 UserIntranet::create([
                     'name' => $user->name,
                     'password' => $user->password, 
+                ]);
+            }
+
+            foreach ($webappDetailIspettori as $detailI) {
+                ProductDetailIspettoriIntranet::create([
+                    'barcode' => $detailI->barcode,
+                    'prezzo' => $detailI->prezzo, 
+                    'foto' => $detailI->foto, 
+                    'note' => $detailI->note, 
+                    'created_at' => $detailI->created_at ?? now(),
+                ]);
+            }
+
+            foreach ($webappIspettori as $ispettori) {
+                ProductDetailIspettoriIntranet::create([
+                    'insegna' => $ispettori->barcode,
+                    'pv' => $ispettori->prezzo, 
+                    'created_at' => $ispettori->created_at ?? now(),
                 ]);
             }
 

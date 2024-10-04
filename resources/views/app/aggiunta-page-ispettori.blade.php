@@ -48,7 +48,7 @@
             <p>{{ session('barcode') }}</p>
 
             <!-- prezzo del prodotto -->
-            <h3 class="fw-bold">Prezzo:</h3>
+            <h3 class="fw-bold">Prezzo € :</h3>
             <div class="row g-2 justify-content-center">
                 <p>{{ session('prezzo')}}</p>
             </div>
