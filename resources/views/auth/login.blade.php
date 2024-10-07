@@ -2,7 +2,7 @@
     <!-- Container centrale per il contenuto -->
     <div class="container mx-auto mt-5  p-4 rounded-lg " style="max-width: 400px;">
 
-        <!-- LOGO TOSANO -->
+        <!-- LOGO -->
         <div class="text-center">
             <img src="{{ asset('storage/logo/logo.png') }}" alt="Logo" class="mb-4">
         </div>

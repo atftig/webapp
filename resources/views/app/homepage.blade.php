@@ -3,7 +3,7 @@
 @section('content')
 
 <div class="container mt-4">
-    <!-------------------------------------------------------- LOGO TOSANO -->
+    <!-------------------------------------------------------- LOGO -->
     <div class="text-center mb-2">
         <img src="{{ asset('storage/logo/logo.png') }}" alt="Logo" class="img-fluid" style="max-width: 230px;">
     </div>
