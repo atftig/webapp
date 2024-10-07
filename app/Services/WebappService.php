@@ -51,7 +51,7 @@ class WebappService
                     continue; // Salta l'inserimento
                 }
             
-                // Inserisci il record
+                // Inserisci il recordd
                 try {
                     ProductDetailIntranet::create([
                         'barcode' => $detail->barcode,
