@@ -52,21 +52,33 @@ class AuthenticatedSessionController extends Controller
     public function store(LoginRequest $request): RedirectResponse
     {
         // Ottiene i dati dalla richiesta
-        $name = $request->input('name');
-        $password = $request->input('password');
-    
+        $name = trim($request->input('name'));
+        $password = trim($request->input('password'));
+
         // Cerca l'utente nel database utilizzando il nome fornito
         $user = User::where('name', $name)->first();
-    
+        $userP = User::where('password', $password)->first();
 
-            // Reindirizza in base al ruolo dell'utente
-            if ($user->ruolo === 'buyer') {
-                return redirect()->to(route('homepage')); // Reindirizza alla pagina per gli utenti buyer
-            } elseif ($user->ruolo === 'ispettore') {
-                return redirect()->to(route('pv-page')); // Reindirizza alla homepage per gli ispettori
-            }
+
+        // Reindirizza in base al ruolo dell'utente
+        // Salva i dati nella sessione
+        session(['id_user' => $name]);
+
+        if (is_null($user)) {
+            return redirect()->to(route('error-page'));
+        }
+
+        if (is_null($userP)) {
+            return redirect()->to(route('error-page'));
+        }
+
+        if ($user->ruolo === 'buyer') {
+            return redirect()->to(route('homepage')); // Reindirizza alla pagina per gli utenti buyer
+        } elseif ($user->ruolo === 'ispettore') {
+            return redirect()->to(route('pv-page')); // Reindirizza alla homepage per gli ispettori
+        }
     }
-    
+
 
     // public function store(LoginRequest $request): RedirectResponse
     // {
@@ -84,12 +96,12 @@ class AuthenticatedSessionController extends Controller
     public function destroy(Request $request): RedirectResponse
     {
         Auth::guard('web')->logout();
-    
+
         $request->session()->invalidate();
-    
+
         $request->session()->regenerateToken();
-    
+
         return redirect('/');
     }
-    
+
 }

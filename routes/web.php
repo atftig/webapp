@@ -67,7 +67,9 @@ Route::get('/aggiunta-page-ispettori', function () {
     return view('app.aggiunta-page-ispettori');
 })->name('aggiunta-page-ispettori');
 
-
+Route::get('/error-page', function(){
+    return view('app.error-page');
+})->name('error-page');
 
 
 

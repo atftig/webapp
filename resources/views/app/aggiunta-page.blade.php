@@ -16,19 +16,19 @@
             <img src="{{ asset('storage/logo/logo.png') }}" alt="Logo" class="img-fluid" style="max-width: 150px;">
             <div class="dropdown ms-4">
                 <button class="btn btn-outline-primary dropdown-toggle" type="button" id="buyerDropdown"
-                    data-bs-toggle="dropdown" aria-expanded="false">
+                    data-bs-toggle="dropdown" >
                     BUYER <i class="fa-solid fa-user"></i>
                 </button>
                 <ul class="dropdown-menu" aria-labelledby="buyerDropdown">
                     <li>
-                        <a href="{{ route('logout') }}" class="dropdown-item text-danger disabled"
+                        <a href="{{ route('logout') }}" class="dropdown-item text-danger "
                             onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                             Esci <i class="fa-solid fa-right-from-bracket"></i>
                         </a>
                     </li>
                 </ul>
             </div>
-            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+            <form id="logout-form" action="{{ route('logout') }}" method="POST" >
                 @csrf
             </form>
         </div>

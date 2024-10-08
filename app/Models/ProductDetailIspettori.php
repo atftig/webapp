@@ -16,6 +16,8 @@ class ProductDetailIspettori extends Model
     protected $fillable = [
         'barcode',
         'prezzo',
+        'id_product_ispettori',
+        'id_user',
         // 'foto',
         // 'note',
         'created_at'

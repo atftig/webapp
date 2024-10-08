@@ -12,29 +12,37 @@
 
 <div class="container-fluid mt-3 bg-white p-3">
     <div class="text-center mb-4">
-        <div class="d-flex justify-content-center align-items-center">
-            <a href="{{route('pv-page')}}">
+        <div class="justify-content-center align-items-center">
+            <!-- <a href="{{route('pv-page')}}">
                 <img src="{{ asset('storage/logo/logo.png') }}" alt="Logo" class="img-fluid" style="max-width: 150px;">
-            </a>
-            <div class="dropdown ms-4">
+            </a> -->
+
+            <div class="text-center mb-2">
+                <a href="{{route('pv-page')}}">
+                    <button style="text-decoration: underline; color: #D32F2F; font-size: 1.3rem;">Clicca qui per tornare alla scelta
+                        dell'insegna</button>
+                </a>
+            </div>
+
+            <!-- <div class="dropdown ms-4">
                 <button class="btn btn-outline-primary dropdown-toggle" type="button" id="buyerDropdown"
                     data-bs-toggle="dropdown" aria-expanded="false">
                     BUYER <i class="fa-solid fa-user"></i>
                 </button>
-                <!--------------------------------------------------------- LOGOUT DISABLED----------------------->
-                <ul class="dropdown-menu" aria-labelledby="buyerDropdown">
+                <------------------------------------------------------- LOGOUT DISABLED----------------------->
+                <!-- <ul class="dropdown-menu" aria-labelledby="buyerDropdown">
                     <li>
-                        <a href="{{ route('logout') }}" class="dropdown-item text-danger disabled"
+                        <a href="{{ route('logout') }}" class="dropdown-item text-danger"
                             onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                             Esci <i class="fa-solid fa-right-from-bracket"></i>
                         </a>
                     </li>
                 </ul>
-            </div>
+            </div> -->
             <!--------------------------------------------------------- /LOGOUT DISABLED----------------------->
-            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+            <!-- <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                 @csrf
-            </form>
+            </form> -->
         </div>
     </div>
 

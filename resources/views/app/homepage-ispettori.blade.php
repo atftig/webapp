@@ -6,7 +6,8 @@
     <!-------------------------------------------------------- LOGO -->
     <div class="text-center mb-2">
         <a href="{{route('pv-page')}}">
-            <img src="{{ asset('storage/logo/logo.png') }}" alt="Logo" class="img-fluid" style="max-width: 230px;">
+            <button style="text-decoration: underline; color: #D32F2F;" >clicca qui per tornare alla scelta dell'insegna</button>
+            <!-- <img src="{{ asset('storage/logo/logo.png') }}" alt="Logo" class="img-fluid" style="max-width: 230px;"> -->
         </a>
     </div>
 
@@ -77,28 +78,28 @@
 
             
                 <!-- ------------------------------------------AGGIUNGI FOTO -->
-                <div id="file-inputs-container">
+                <!-- <div id="file-inputs-container">
                     <div class="mb-2 ">
                     <label for="foto" class="form-label d-flex" style="font-size: 2rem;">Vuoi aggiungere altro?</label>
                         <label for="foto" class="form-label d-flex" style="font-size: 1.6rem;">3) Aggiungi foto:</label>
                         <label for="file-input-1" class="custom-file-upload">
                             Seleziona/scatta foto
                         </label>
-                        <input id="file-input-1" class="form-control" name="foto" type="file" style="display: none;">
+                        <input id="file-input-1" class="form-control" name="foto[]" type="file" style="display: none;">
                         <ul id="file-list-1" class="file-list">
                             <li>Nessun file selezionato</li>
                         </ul>
                         <div id="image-preview-1" class="image-preview"></div>
                     </div>
-                </div>
+                </div> -->
 
                 <!-----------------------------------------------NOTE -->
-                <div class="mb-3">
+                <!-- <div class="mb-3">
                     <label for="note" class="form-label" style="font-size: 1.6rem;">4) Aggiungi note:</label>
                     <textarea class="form-control" id="note" name="note" rows="5"
                         placeholder="Inserisci note"
                         style="border-radius: 8px; border: 1px solid #666666;"></textarea>
-                </div>
+                </div> -->
             </form>
         </div>
     </div>
@@ -137,68 +138,68 @@
     });
 
     // Funzione per aggiornare la lista di file selezionati e l'anteprima delle immagini
-    // function updateFileList(event, counter) {
-    //     const fileList = event.target.files;
-    //     const fileListContainer = document.getElementById(`file-list-${counter}`);
-    //     const imagePreviewContainer = document.getElementById(`image-preview-${counter}`);
+    function updateFileList(event, counter) {
+    const fileList = event.target.files;
+    const fileListContainer = document.getElementById(`file-list-${counter}`);
+    const imagePreviewContainer = document.getElementById(`image-preview-${counter}`);
         
-    //     fileListContainer.innerHTML = '';  // Pulisce la lista precedente
-    //     imagePreviewContainer.innerHTML = '';  // Pulisce l'anteprima delle immagini
+    fileListContainer.innerHTML = '';  // Pulisce la lista precedente
+    imagePreviewContainer.innerHTML = '';  // Pulisce l'anteprima delle immagini
 
-    //     if (fileList.length === 0) {
-    //         fileListContainer.innerHTML = '<li>Nessun file selezionato</li>';
-    //     } else {
-    //         for (let i = 0; i < fileList.length; i++) {
-    //             const li = document.createElement('li');
-    //             li.textContent = fileList[i].name;
-    //             fileListContainer.appendChild(li);
+         if (fileList.length === 0) {
+             fileListContainer.innerHTML = '<li>Nessun file selezionato</li>';
+        } else {
+            for (let i = 0; i < fileList.length; i++) {
+               const li = document.createElement('li');
+                li.textContent = fileList[i].name;
+                fileListContainer.appendChild(li);
 
     //             // Creazione di un oggetto URL per visualizzare l'anteprima dell'immagine
-    //             const img = document.createElement('img');
-    //             img.src = URL.createObjectURL(fileList[i]);
-    //             img.style.width = '100px';  // Imposta la dimensione dell'anteprima
-    //             img.style.height = '100px';
-    //             imagePreviewContainer.appendChild(img);
-    //         }
-    //     }
-    // }
+                const img = document.createElement('img');
+                img.src = URL.createObjectURL(fileList[i]);
+                img.style.width = '100px';  // Imposta la dimensione dell'anteprima
+                img.style.height = '100px';
+                imagePreviewContainer.appendChild(img);
+            }
+        }
+    }
 
     // // Gestione del primo input per le foto
-    // document.getElementById('file-input-1').addEventListener('change', function(event) {
-    //     updateFileList(event, 1);
+    document.getElementById('file-input-1').addEventListener('change', function(event) {
+        updateFileList(event, 1);
 
     //     // Mostra il pulsante per aggiungere un'altra foto dopo aver selezionato la prima
-    //     document.getElementById('add-photo-container').style.display = 'block';
-    // });
+        document.getElementById('add-photo-container').style.display = 'block';
+    });
 
     // // Gestione del pulsante per aggiungere un'altra foto
-    // document.getElementById('add-photo-btn').addEventListener('click', function() {
-    //     const newCounter = document.querySelectorAll('[id^=file-input-]').length + 1;
+    document.getElementById('add-photo-btn').addEventListener('click', function() {
+        const newCounter = document.querySelectorAll('[id^=file-input-]').length + 1;
 
-    //     let newInputDiv = document.createElement('div');
-    //     newInputDiv.classList.add('mb-2');
-    //     newInputDiv.id = `photo-input-${newCounter}`;
+        let newInputDiv = document.createElement('div');
+        newInputDiv.classList.add('mb-2');
+        newInputDiv.id = `photo-input-${newCounter}`;
 
-    //     newInputDiv.innerHTML = `
-    //         <label for="file-input-${newCounter}" class="form-label d-flex" style="font-size: 1.6rem;">Aggiungi foto:</label>
-    //         <label for="file-input-${newCounter}" class="custom-file-upload">
-    //             Seleziona/scatta foto
-    //         </label>
-    //         <input id="file-input-${newCounter}" class="form-control" name="photo[]" type="file" style="display: none;">
-    //         <ul id="file-list-${newCounter}" class="file-list">
-    //             <li>Nessun file selezionato</li>
-    //         </ul>
-    //         <div id="image-preview-${newCounter}" class="image-preview"></div>
-    //     `;
+        newInputDiv.innerHTML = `
+            <label for="file-input-${newCounter}" class="form-label d-flex" style="font-size: 1.6rem;">Aggiungi foto:</label>
+            <label for="file-input-${newCounter}" class="custom-file-upload">
+                Seleziona/scatta foto
+            </label>
+            <input id="file-input-${newCounter}" class="form-control" name="photo[]" type="file" style="display: none;">
+            <ul id="file-list-${newCounter}" class="file-list">
+                <li>Nessun file selezionato</li>
+            </ul>
+            <div id="image-preview-${newCounter}" class="image-preview"></div>
+        `;
 
-    //     document.getElementById('file-inputs-container').appendChild(newInputDiv);
+        document.getElementById('file-inputs-container').appendChild(newInputDiv);
 
     //     // Aggiungi l'evento per il nuovo input
-    //     let fileInput = document.getElementById(`file-input-${newCounter}`);
-    //     fileInput.addEventListener('change', function(event) {
-    //         updateFileList(event, newCounter);
-    //     });
-    // });
+        let fileInput = document.getElementById(`file-input-${newCounter}`);
+        fileInput.addEventListener('change', function(event) {
+            updateFileList(event, newCounter);
+        });
+    });
 </script>
 
 <style>
