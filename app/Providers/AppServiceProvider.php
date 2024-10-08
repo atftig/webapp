@@ -5,6 +5,7 @@ namespace App\Providers;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Blade;
 use App\View\Components\BarcodeScanner;
+use URL;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -23,5 +24,8 @@ class AppServiceProvider extends ServiceProvider
     {
         // Registra il componente personalizzato
         Blade::component('barcode-scanner', BarcodeScanner::class);
+        if(str_contains(config('app.url'), 'https')){
+            URL::forceScheme('https');
+        }
     }
 }
