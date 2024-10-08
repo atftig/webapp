@@ -22,7 +22,7 @@
                 <x-input-label style="font-size: 1.5rem;" for="name" :value="__('Nome utente')" />
                 <x-text-input style="height:50px" id="name" class="block mt-3 mb-4 w-full" type="text" name="name"
                     :value="old('name')" required autofocus autocomplete="username"
-                    placeholder="Inserisci nome utente" />
+                    placeholder="Inserisci soprannome utente" />
                 <x-input-error :messages="$errors->get('name')" class="mt-2" />
             </div>
 
