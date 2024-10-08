@@ -13,9 +13,11 @@ class ProductIspettori extends Model
     public $timestamps = false;
 
     protected $table = 'product_ispettori';  // Nome della tabella
+    protected $primaryKey = 'id';
     protected $fillable = [
         'insegna',
         'pv',
+        'id',
         'created_at'
     ]; 
 }

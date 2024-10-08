@@ -9,6 +9,7 @@ class Login extends Model
     protected $table = 'users';     //nome della tabella nel database
     public $timestamps = false;     //se la tabella non ha colonne per timestamp
 
+    protected $primaryKey = 'name';
     protected $fillable = ['name', 'password']; //colonne da proteggere
 
 }

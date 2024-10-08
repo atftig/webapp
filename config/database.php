@@ -56,7 +56,7 @@ return [
             'prefix' => '',
             'strict' => true,
             'engine' => null,
-            'options' => [PDO::MYSQL_ATTR_SSL_CA => env('MYSQL_ATTR_SSL_CA', storage_path('certificates/digital-ocean.crt'))],
+            // 'options' => [PDO::MYSQL_ATTR_SSL_CA => env('MYSQL_ATTR_SSL_CA', storage_path('certificates/digital-ocean.crt'))],
         ],
 
         'pgsql' => [
