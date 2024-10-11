@@ -58,7 +58,7 @@ return [
             'engine' => null,
             // 'options' => [PDO::MYSQL_ATTR_SSL_CA => env('MYSQL_ATTR_SSL_CA', storage_path('certificates/digital-ocean.crt'))],
             'options' => extension_loaded('pdo_mysql') ? array_filter([
-                PDO::MYSQL_ATTR_SSL_CA => env('MYSQL_ATTR_SSL_CA'),  // Certificato SSL per connessioni sicure
+                PDO::MYSQL_ATTR_SSL_CA => storage_path(env('MYSQL_ATTR_SSL_CA')),  // Certificato SSL per connessioni sicure
             ]) : [],
         ],
 
