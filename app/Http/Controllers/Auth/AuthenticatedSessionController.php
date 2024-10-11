@@ -17,7 +17,7 @@ class AuthenticatedSessionController extends Controller
     /**
      * Display the login view.
      */
-    public function create()
+    public function create()    //create() mostra la vista di login
     {
         return view('auth.login');
     }
@@ -49,15 +49,15 @@ class AuthenticatedSessionController extends Controller
     //     }
     // }
 
-    public function store(LoginRequest $request): RedirectResponse
-    {
+    public function store(LoginRequest $request): RedirectResponse 
+    {        //store() gestisce la richiesta di autenticazione
         // Ottiene i dati dalla richiesta
         $name = trim($request->input('name'));
         $password = trim($request->input('password'));
 
         // Cerca l'utente nel database utilizzando il nome fornito
         $user = User::where('name', $name)->first();
-        $userP = User::where('password', $password)->first();
+        // $userP = User::where('password', $password)->first();
 
 
         // Reindirizza in base al ruolo dell'utente
@@ -68,9 +68,9 @@ class AuthenticatedSessionController extends Controller
             return redirect()->to(route('error-page'));
         }
 
-        if (is_null($userP)) {
-            return redirect()->to(route('error-page'));
-        }
+        // if (is_null($userP)) {
+        //     return redirect()->to(route('error-page'));
+        // }
 
         if ($user->ruolo === 'buyer') {
             return redirect()->to(route('homepage')); // Reindirizza alla pagina per gli utenti buyer
