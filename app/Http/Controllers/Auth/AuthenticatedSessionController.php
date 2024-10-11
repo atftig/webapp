@@ -57,7 +57,7 @@ class AuthenticatedSessionController extends Controller
 
         // Cerca l'utente nel database utilizzando il nome fornito
         $user = User::where('name', $name)->first();
-        // $userP = User::where('password', $password)->first();
+        $userP = User::where('password', $password)->first();
 
 
         // Reindirizza in base al ruolo dell'utente
@@ -68,9 +68,9 @@ class AuthenticatedSessionController extends Controller
             return redirect()->to(route('error-page'));
         }
 
-        // if (is_null($userP)) {
-        //     return redirect()->to(route('error-page'));
-        // }
+        if (is_null($userP)) {
+            return redirect()->to(route('error-page'));
+        }
 
         if ($user->ruolo === 'buyer') {
             return redirect()->to(route('homepage')); // Reindirizza alla pagina per gli utenti buyer
