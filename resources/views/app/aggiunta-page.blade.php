@@ -16,7 +16,7 @@
             <img src="{{ asset('storage/logo/logo.png') }}" alt="Logo" class="img-fluid" style="max-width: 150px;">
             <div class="dropdown ms-4">
                 <button class="btn btn-outline-primary dropdown-toggle" type="button" id="buyerDropdown"
-                    data-bs-toggle="dropdown" >
+                    data-bs-toggle="dropdown">
                     BUYER <i class="fa-solid fa-user"></i>
                 </button>
                 <ul class="dropdown-menu" aria-labelledby="buyerDropdown">
@@ -28,7 +28,7 @@
                     </li>
                 </ul>
             </div>
-            <form id="logout-form" action="{{ route('logout') }}" method="POST" >
+            <form id="logout-form" action="{{ route('logout') }}" method="POST">
                 @csrf
             </form>
         </div>

@@ -63,6 +63,7 @@ Route::get('/homepage-ispettori', function(){
 Route::post('/store-ispettore', [IspettoriController::class, 'storeDetails'])->name('store-ispettore');
 
 
+
 Route::get('/aggiunta-page-ispettori', function () {
     return view('app.aggiunta-page-ispettori');
 })->name('aggiunta-page-ispettori');

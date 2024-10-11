@@ -6,7 +6,8 @@
     <!-------------------------------------------------------- LOGO -->
     <div class="text-center mb-2">
         <a href="{{route('pv-page')}}">
-            <button style="text-decoration: underline; color: #D32F2F;" >clicca qui per tornare alla scelta dell'insegna</button>
+            <button style="text-decoration: underline; color: #D32F2F;">clicca qui per tornare alla scelta
+                dell'insegna</button>
             <!-- <img src="{{ asset('storage/logo/logo.png') }}" alt="Logo" class="img-fluid" style="max-width: 230px;"> -->
         </a>
     </div>
@@ -17,22 +18,23 @@
 
 
 
-         <!-- Mostriamo i dettagli dell'articolo -->
-         <div class="text-center mb-4">
-            <h2 class="fw-bold">Insegna:</h2>
-            <p>{{ session('insegna') }}</p>
+            <!-- Mostriamo i dettagli dell'articolo -->
+            <div class="text-center mb-4">
+                <h2 class="fw-bold">Insegna:</h2>
+                <p>{{ session('insegna') }}</p>
 
-            <!-- prezzo del prodotto -->
-            <h2 class="fw-bold">Punto Vendita:</h2>
-            <div class="row g-2 justify-content-center">
-                <p>{{ session('pv')}}</p>
+                <!-- prezzo del prodotto -->
+                <h2 class="fw-bold">Punto Vendita:</h2>
+                <div class="row g-2 justify-content-center">
+                    <p>{{ session('pv')}}</p>
+                </div>
             </div>
-        </div>
 
             <h2 class="text-center mb-2 blue_color" style="font-size: 2.5rem;">Aggiungi dettagli ispezione</h2>
 
             <form action="{{ route('store-ispettore') }}" method="POST" enctype="multipart/form-data">
                 @csrf
+               
 
                 <!-- Errori di validazione -->
                 @if ($errors->any())
@@ -47,7 +49,8 @@
 
                 <!-- ------------------------------------------BARCODE -->
                 <div class="mb-2">
-                    <label for="barcode" class="form-label d-flex" style="font-size: 1.6rem;">1) Aggiungi barcode:</label>
+                    <label for="barcode" class="form-label d-flex" style="font-size: 1.6rem;">1) Aggiungi
+                        barcode:</label>
 
                     <!-- Campo per inserire il barcode con foto (ean-13) -->
                     <label for="ufile" class="custom-file-upload">
@@ -57,7 +60,8 @@
 
                     <p class="mt-2">oppure</p>
                     <!-- inserimento manuale del barcode -->
-                    <input type="text" class="form-control mt-2" id="x" name="barcode" placeholder="Inserisci barcode manualmente"
+                    <input type="text" class="form-control mt-2" id="x" name="barcode"
+                        placeholder="Inserisci barcode manualmente"
                         style="border: 1px solid #666666; border-radius: 8px; height:50px" required>
                 </div>
 
@@ -66,8 +70,7 @@
                 <div class="mb-3">
                     <label for="prezzo" class="form-label" style="font-size: 1.6rem;">2) Aggiungi prezzo:</label>
                     <input type="text" class="form-control" id="prezzo" name="prezzo" rows="5"
-                        placeholder="Inserisci prezzo"
-                        style="border-radius: 8px; border: 1px solid #666666;"></i>
+                        placeholder="Inserisci prezzo" style="border-radius: 8px; border: 1px solid #666666;"></i>
                 </div>
 
                 <!-- ------------------------------------------BOTTONE DI INVIO -->
@@ -76,7 +79,7 @@
                         style="background-color: #D32F2F; border-radius: 8px; height: 5rem; font-size: 2rem;">Carica</button>
                 </div>
 
-            
+
                 <!-- ------------------------------------------AGGIUNGI FOTO -->
                 <!-- <div id="file-inputs-container">
                     <div class="mb-2 ">
@@ -110,7 +113,7 @@
 <script>
     // Gestione del barcode scanner
     const ufile = document.getElementById('ufile');
-    ufile.addEventListener('change', function(event) {
+    ufile.addEventListener('change', function (event) {
         let reader = new FileReader();
         reader.readAsDataURL(ufile.files[0]);
 
@@ -125,7 +128,7 @@
                         readers: ["ean_reader"]
                     }
                 },
-                function(result) {
+                function (result) {
                     if (result.codeResult) {
                         console.log("result", result.codeResult.code);
                         document.getElementById('x').value = result.codeResult.code;
@@ -139,22 +142,22 @@
 
     // Funzione per aggiornare la lista di file selezionati e l'anteprima delle immagini
     function updateFileList(event, counter) {
-    const fileList = event.target.files;
-    const fileListContainer = document.getElementById(`file-list-${counter}`);
-    const imagePreviewContainer = document.getElementById(`image-preview-${counter}`);
-        
-    fileListContainer.innerHTML = '';  // Pulisce la lista precedente
-    imagePreviewContainer.innerHTML = '';  // Pulisce l'anteprima delle immagini
+        const fileList = event.target.files;
+        const fileListContainer = document.getElementById(`file-list-${counter}`);
+        const imagePreviewContainer = document.getElementById(`image-preview-${counter}`);
 
-         if (fileList.length === 0) {
-             fileListContainer.innerHTML = '<li>Nessun file selezionato</li>';
+        fileListContainer.innerHTML = '';  // Pulisce la lista precedente
+        imagePreviewContainer.innerHTML = '';  // Pulisce l'anteprima delle immagini
+
+        if (fileList.length === 0) {
+            fileListContainer.innerHTML = '<li>Nessun file selezionato</li>';
         } else {
             for (let i = 0; i < fileList.length; i++) {
-               const li = document.createElement('li');
+                const li = document.createElement('li');
                 li.textContent = fileList[i].name;
                 fileListContainer.appendChild(li);
 
-    //             // Creazione di un oggetto URL per visualizzare l'anteprima dell'immagine
+                //             // Creazione di un oggetto URL per visualizzare l'anteprima dell'immagine
                 const img = document.createElement('img');
                 img.src = URL.createObjectURL(fileList[i]);
                 img.style.width = '100px';  // Imposta la dimensione dell'anteprima
@@ -165,15 +168,15 @@
     }
 
     // // Gestione del primo input per le foto
-    document.getElementById('file-input-1').addEventListener('change', function(event) {
+    document.getElementById('file-input-1').addEventListener('change', function (event) {
         updateFileList(event, 1);
 
-    //     // Mostra il pulsante per aggiungere un'altra foto dopo aver selezionato la prima
+        //     // Mostra il pulsante per aggiungere un'altra foto dopo aver selezionato la prima
         document.getElementById('add-photo-container').style.display = 'block';
     });
 
     // // Gestione del pulsante per aggiungere un'altra foto
-    document.getElementById('add-photo-btn').addEventListener('click', function() {
+    document.getElementById('add-photo-btn').addEventListener('click', function () {
         const newCounter = document.querySelectorAll('[id^=file-input-]').length + 1;
 
         let newInputDiv = document.createElement('div');
@@ -194,9 +197,9 @@
 
         document.getElementById('file-inputs-container').appendChild(newInputDiv);
 
-    //     // Aggiungi l'evento per il nuovo input
+        //     // Aggiungi l'evento per il nuovo input
         let fileInput = document.getElementById(`file-input-${newCounter}`);
-        fileInput.addEventListener('change', function(event) {
+        fileInput.addEventListener('change', function (event) {
             updateFileList(event, newCounter);
         });
     });

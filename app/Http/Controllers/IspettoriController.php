@@ -14,6 +14,7 @@ class IspettoriController extends Controller
     // ---------------------------------ISPETTORI-----------------------------------------------------------------------
     public function storeDetails(Request $request)
     {
+        
         // Validazione dei dati del form
         $validatedData = $request->validate([
             'barcode' => 'required|string|max:100',
