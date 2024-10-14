@@ -21,12 +21,12 @@
             <!-- Mostriamo i dettagli dell'articolo -->
             <div class="text-center mb-4">
                 <h2 class="fw-bold">Insegna:</h2>
-                <p>{{ session('insegna') }}</p>
+                <p>{{ $insegna }}</p>
 
                 <!-- prezzo del prodotto -->
                 <h2 class="fw-bold">Punto Vendita:</h2>
                 <div class="row g-2 justify-content-center">
-                    <p>{{ session('pv')}}</p>
+                    <p>{{ $pv}}</p>
                 </div>
             </div>
 

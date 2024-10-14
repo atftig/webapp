@@ -106,9 +106,9 @@ class BuyerController extends Controller
         // );
 
         // Salva i dati nella sessione
-        session(['insegna' => $validatedData['insegna']]);
-        session(['pv' => $validatedData['pv']]);
-        session(['id_product_ispettori'=> trim($validatedData['insegna'])."-".trim($validatedData['pv'])]);
+        // session(['insegna' => $validatedData['insegna']]);
+        // session(['pv' => $validatedData['pv']]);
+        // session(['id_product_ispettori'=> trim($validatedData['insegna'])."-".trim($validatedData['pv'])]);
 
         // Reindirizzamento dopo il salvataggio con un messaggio di successo
         Log::info('Dati salvati per l\'insegna e punto vendita', [
@@ -116,8 +116,10 @@ class BuyerController extends Controller
             'pv' => $validatedData['pv']
         ]);
 
-        return redirect()->to('/homepage-ispettori')->with('success', 'Dati salvati con successo!');
+        // return redirect()->to('/homepage-ispettori')->with('success', 'Dati salvati con successo!');
+        return view('app.homepage-ispettori', [
+            'insegna' => trim($validatedData['insegna']), 
+            'pv' => trim($validatedData['pv'])
+            ]);
     }
-
-
 }

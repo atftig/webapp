@@ -6,9 +6,12 @@ use App\Models\ProductDetailIspettori;
 
 class IspettoriController extends Controller
 {
-    public function index()
+    public function index($insegna = null, $pv = null)
     {
-        return view('app.homepage-ispettori');
+        return view('app.homepage-ispettori', [
+            'pv' => $pv,
+            'insegna' => $insegna
+        ]);
     }
 
     // ---------------------------------ISPETTORI-----------------------------------------------------------------------
