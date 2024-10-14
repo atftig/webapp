@@ -14,6 +14,7 @@ class ProductDetailIspettori extends Model
 
     protected $table = 'product_details_ispettori';  // Nome della tabella
     protected $fillable = [
+        'id',
         'barcode',
         'prezzo',
         'id_product_ispettori',
