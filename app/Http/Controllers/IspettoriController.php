@@ -17,8 +17,9 @@ class IspettoriController extends Controller
     // ---------------------------------ISPETTORI-----------------------------------------------------------------------
     public function storeDetails(Request $request)
     {
-        // dd(session('id_user'));
-        
+        //dichiaro la variabile
+        $ciao = $request->input('id_product_ispettori');
+
         // Validazione dei dati del form
         $validatedData = $request->validate([
             'barcode' => 'required|string|max:100',
@@ -29,21 +30,26 @@ class IspettoriController extends Controller
         ]);
 
         // Salvataggio dei dettagli del prodotto
-        $productDetail = ProductDetailIspettori::create([
-            'barcode' => $validatedData['barcode'],
-            'prezzo' => $validatedData['prezzo'],
-            'note' => $validatedData['note'] ?? null, // Assegna null se non ci sono note
-            'id_product_ispettori'=> session('id_product_ispettori'),
-            'id_user'=> session('id_user'),
-            'created_at' => now(),  // Imposta la data di creazione
-        ]
-    );
+        $productDetail = ProductDetailIspettori::create(
+            [
+                'barcode' => $validatedData['barcode'],
+                'prezzo' => $validatedData['prezzo'],
+                'note' => $validatedData['note'] ?? null, // Assegna null se non ci sono note
+                // 'id_product_ispettori' => $request->input('id_product_ispettori') ,
+                // utilizzo la variabile
+                'id_product_ispettori' => $ciao,
+                // 'id_product_ispettori' => session('id_product_ispettori'),
+                'id_user' => session('id_user'),
+
+                'created_at' => now(),  // Imposta la data di creazione
+            ]
+        );
 
 
         // Salva i dettagli nella sessione
-        session(['barcode' => $productDetail->barcode]);
-        session(['prezzo' => $validatedData['prezzo']]);
-        session(['note' => $validatedData['note'] ?? null]);
+        // session(['barcode' => $productDetail->barcode]);
+        // session(['prezzo' => $validatedData['prezzo']]);
+        // session(['note' => $validatedData['note'] ?? null]);
 
         // Logica per il salvataggio delle foto
         if ($request->hasFile('foto')) {
@@ -55,8 +61,18 @@ class IspettoriController extends Controller
                 $productDetail->images()->create(['path' => $path]);
             }
         }
-        \Log::info('Test log message!');
+        \Log::info('Dati salvati per barcode, prezzo e note', [
+            'barcode' => $validatedData['barcode'],
+            'prezzo' => $validatedData['prezzo'],
+            'note' => $validatedData['note'] ?? null,
+        ]);
 
-        return redirect()->route('aggiunta-page-ispettori');
+        // return redirect()->route('aggiunta-page-ispettori');
+
+        return view('app.aggiunta-page-ispettori', [
+            'barcode' => $validatedData['barcode'],
+            'prezzo' => $validatedData['prezzo'],
+            // 'note' => $validatedData['note'] ,
+        ]);
     }
 }

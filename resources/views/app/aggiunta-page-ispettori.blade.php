@@ -55,16 +55,19 @@
         <!-- Mostriamo i dettagli dell'articolo -->
         <div class="text-center mb-4">
             <h3 class="fw-bold">Barcode:</h3>
-            <p>{{ session('barcode') }}</p>
+            <p>{{ $barcode }}</p>
 
             <!-- prezzo del prodotto -->
             <h3 class="fw-bold">Prezzo € :</h3>
             <div class="row g-2 justify-content-center">
-                <p>{{ session('prezzo')}}</p>
+                <p>{{ $prezzo}}</p>
             </div>
 
-            <!-- <h3 class="fw-bold">Note:</h3>
-            <p>{{ session('note') ?? 'Nessuna nota fornita' }}</p>  -->
+            <!-- isset = if set = se note è settato lo mette, se invece è null no (messa in alternativa al commento-->
+            @isset($note)
+                <h3 class="fw-bold">Note:</h3>
+                <p>{{ $note }}</p>
+            @endisset
 
             <a href="{{route('homepage-ispettori')}}" class="btn btn-primary" style="font-size: 1.4rem; padding: 1rem;">
                 Aggiungi un altro prodotto

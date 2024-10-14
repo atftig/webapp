@@ -119,7 +119,8 @@ class BuyerController extends Controller
         // return redirect()->to('/homepage-ispettori')->with('success', 'Dati salvati con successo!');
         return view('app.homepage-ispettori', [
             'insegna' => trim($validatedData['insegna']), 
-            'pv' => trim($validatedData['pv'])
+            'pv' => trim($validatedData['pv']),
+            'id_product_ispettori'=>trim($validatedData['insegna'])."-".trim($validatedData['pv']),
             ]);
     }
 }
