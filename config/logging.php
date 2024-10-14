@@ -62,7 +62,7 @@ return [
             'driver' => 'single',
             'path' => storage_path('logs/laravel.log'),
             'level' => env('LOG_LEVEL', 'debug'),
-            'replace_placeholders' => true,
+            // 'replace_placeholders' => true,
         ],
 
         'daily' => [
@@ -70,7 +70,7 @@ return [
             'path' => storage_path('logs/laravel.log'),
             'level' => env('LOG_LEVEL', 'debug'),
             'days' => 14,
-            'replace_placeholders' => true,
+            // 'replace_placeholders' => true,
         ],
 
         'slack' => [
@@ -79,7 +79,7 @@ return [
             'username' => 'Laravel Log',
             'emoji' => ':boom:',
             'level' => env('LOG_LEVEL', 'critical'),
-            'replace_placeholders' => true,
+            // 'replace_placeholders' => true,
         ],
 
         'papertrail' => [

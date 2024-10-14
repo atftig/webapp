@@ -111,6 +111,11 @@ class BuyerController extends Controller
         session(['id_product_ispettori'=> trim($validatedData['insegna'])."-".trim($validatedData['pv'])]);
 
         // Reindirizzamento dopo il salvataggio con un messaggio di successo
+        Log::info('Dati salvati per l\'insegna e punto vendita', [
+            'insegna' => $validatedData['insegna'],
+            'pv' => $validatedData['pv']
+        ]);
+
         return redirect()->to('/homepage-ispettori')->with('success', 'Dati salvati con successo!');
     }
 

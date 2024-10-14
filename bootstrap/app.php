@@ -1,5 +1,7 @@
 <?php
 
+
+use Illuminate\Foundation\Configuration\Exceptions;
 /*
 |--------------------------------------------------------------------------
 | Create The Application

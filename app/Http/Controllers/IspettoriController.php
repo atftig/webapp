@@ -14,6 +14,7 @@ class IspettoriController extends Controller
     // ---------------------------------ISPETTORI-----------------------------------------------------------------------
     public function storeDetails(Request $request)
     {
+        // dd(session('id_user'));
         
         // Validazione dei dati del form
         $validatedData = $request->validate([
@@ -51,6 +52,7 @@ class IspettoriController extends Controller
                 $productDetail->images()->create(['path' => $path]);
             }
         }
+        \Log::info('Test log message!');
 
         return redirect()->route('aggiunta-page-ispettori');
     }
