@@ -23,8 +23,8 @@
                 <h2 class="fw-bold">Insegna:</h2>
                 <p>{{ $insegna }}</p>
 
-                <!-- prezzo del prodotto -->
-                <h2 class="fw-bold">Punto Vendita:</h2>
+            <!-- prezzo del prodotto -->
+            <h2 class="fw-bold">Punto Vendita:</h2>
                 <div class="row g-2 justify-content-center">
                     <p>{{ $pv }}</p>
                 </div>
@@ -32,9 +32,14 @@
 
             <h2 class="text-center mb-2 blue_color" style="font-size: 2.5rem;">Aggiungi dettagli ispezione</h2>
 
-            <form action="{{ route('store-ispettore' , ['id_product_ispettori' => $id_product_ispettori ]) }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('store-ispettore', ['id_product_ispettori' => $id_product_ispettori]) }}"
+                method="POST" enctype="multipart/form-data">
                 @csrf
-               
+
+                <input type="hidden" name="insegna" value="{{ $insegna }}">
+                <input type="hidden" name="pv" value="{{ $pv }}">
+
+
 
                 <!-- Errori di validazione -->
                 @if ($errors->any())

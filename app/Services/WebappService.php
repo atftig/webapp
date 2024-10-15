@@ -33,7 +33,7 @@ class WebappService
             $webappIspettori = ProductIspettori::all();
             
 
-            Log::info("ciao");
+            Log::info("ciaone");
 
             // Esegui l'insert dei dati nel database SQL Server (Intranet)
             foreach ($webappDetail as $detail) {

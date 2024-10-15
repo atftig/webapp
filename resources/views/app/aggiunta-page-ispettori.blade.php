@@ -19,7 +19,8 @@
 
             <div class="text-center mb-2">
                 <a href="{{route('pv-page')}}">
-                    <button style="text-decoration: underline; color: #D32F2F; font-size: 1.3rem;">Clicca qui per tornare alla scelta
+                    <button style="text-decoration: underline; color: #D32F2F; font-size: 1.3rem;">Clicca qui per
+                        tornare alla scelta
                         dell'insegna</button>
                 </a>
             </div>
@@ -30,7 +31,7 @@
                     BUYER <i class="fa-solid fa-user"></i>
                 </button>
                 <------------------------------------------------------- LOGOUT DISABLED----------------------->
-                <!-- <ul class="dropdown-menu" aria-labelledby="buyerDropdown">
+            <!-- <ul class="dropdown-menu" aria-labelledby="buyerDropdown">
                     <li>
                         <a href="{{ route('logout') }}" class="dropdown-item text-danger"
                             onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
@@ -63,13 +64,25 @@
                 <p>{{ $prezzo}}</p>
             </div>
 
+            <div class="text-center mb-4">
+                <h2 class="fw-bold">Insegna:</h2>
+                <p>{{ $insegna }}</p>
+
+                <h2 class="fw-bold">Punto Vendita:</h2>
+                <div class="row g-2 justify-content-center">
+                    <p>{{ $pv }}</p>
+                </div>
+            </div>
+
+
             <!-- isset = if set = se note è settato lo mette, se invece è null no (messa in alternativa al commento-->
             @isset($note)
                 <h3 class="fw-bold">Note:</h3>
                 <p>{{ $note }}</p>
             @endisset
 
-            <a href="{{route('homepage-ispettori')}}" class="btn btn-primary" style="font-size: 1.4rem; padding: 1rem;">
+            <a href="{{route('homepage-ispettori', ['insegna' => $insegna, 'pv' => $pv, ])}}" class="btn btn-primary"
+                style="font-size: 1.4rem; padding: 1rem;">
                 Aggiungi un altro prodotto
             </a>
         </div>

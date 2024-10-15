@@ -59,10 +59,11 @@ Route::get('/homepage-ispettori', function(){
 })->name('homepage-ispettori');
 
 
+// Rotta per la homepage degli ispettori
+Route::get('/homepage-ispettori/{insegna?}/{pv?}', [IspettoriController::class, 'index'])->name('homepage-ispettori');
 
+// Rotta per il salvataggio dei dettagli
 Route::post('/store-ispettore', [IspettoriController::class, 'storeDetails'])->name('store-ispettore');
-
-
 
 Route::get('/aggiunta-page-ispettori', function () {
     return view('app.aggiunta-page-ispettori');
