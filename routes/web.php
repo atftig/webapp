@@ -73,6 +73,8 @@ Route::get('/error-page', function(){
     return view('app.error-page');
 })->name('error-page');
 
+Route::post('/search-barcode', [BarcodeController::class, 'search'])->name('barcode.search');
+
 
 
 //-----------------------FINE ROTTE PER PROGETTO ISPETTORI------------------------------------------------

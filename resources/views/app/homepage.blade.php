@@ -29,28 +29,40 @@
 
                 <!-- ------------------------------------------BARCODE -->
                 <div class="mb-2">
-                    <label for="barcode" class="form-label d-flex" style="font-size: 1.6rem;">1) Aggiungi barcode:</label>
+                    <label for="barcode" class="form-label d-flex" style="font-size: 1.6rem;">1) Aggiungi
+                        barcode:</label>
 
                     <!-- Campo per inserire il barcode con foto (ean-13) -->
                     <label for="ufile" class="custom-file-upload">
                         Scansiona barcode
                     </label>
+
                     <input type="file" name="ufile" id="ufile" style="display: none;">
 
                     <p class="mt-2">oppure</p>
+
                     <!-- inserimento manuale del barcode -->
-                    <input type="text" class="form-control mt-2" id="x" name="barcode" placeholder="Inserisci barcode"
-                        style="border: 1px solid #666666; border-radius: 8px; height:50px" required>
+                    <!-- <input type="text" class="form-control mt-2" id="x" name="barcode" placeholder="Inserisci barcode"
+                        style="border: 1px solid #666666; border-radius: 8px; height:50px" required> -->
+                    <div class="d-flex">
+                        <input type="text" class="form-control mt-2" id="x" name="barcode"
+                            placeholder="Inserisci barcode"
+                            style="border: 1px solid #666666; border-radius: 8px; height:50px" required>
+                        <button type="button" onclick="searchBarcode()" class="btn btn-primary ms-2 mt-2"
+                            style="height: 50px;">Cerca</button>
+                    </div>
                 </div>
 
                 <!-- ------------------------------------------AGGIUNGI FOTO -->
                 <div id="file-inputs-container">
                     <div class="mb-2">
-                        <label for="photo" class="form-label d-flex" style="font-size: 1.6rem;">2) Aggiungi foto:</label>
+                        <label for="photo" class="form-label d-flex" style="font-size: 1.6rem;">2) Aggiungi
+                            foto:</label>
                         <label for="file-input-1" class="custom-file-upload">
                             Seleziona/scatta foto
                         </label>
-                        <input id="file-input-1" class="form-control" name="photo[]" type="file" style="display: none;" required>
+                        <input id="file-input-1" class="form-control" name="photo[]" type="file" style="display: none;"
+                            required>
                         <ul id="file-list-1" class="file-list">
                             <li>Nessun file selezionato</li>
                         </ul>
@@ -88,7 +100,7 @@
 <script>
     // Gestione del barcode scanner
     const ufile = document.getElementById('ufile');
-    ufile.addEventListener('change', function(event) {
+    ufile.addEventListener('change', function (event) {
         let reader = new FileReader();
         reader.readAsDataURL(ufile.files[0]);
 
@@ -103,7 +115,7 @@
                         readers: ["ean_reader"]
                     }
                 },
-                function(result) {
+                function (result) {
                     if (result.codeResult) {
                         console.log("result", result.codeResult.code);
                         document.getElementById('x').value = result.codeResult.code;
@@ -120,7 +132,7 @@
         const fileList = event.target.files;
         const fileListContainer = document.getElementById(`file-list-${counter}`);
         const imagePreviewContainer = document.getElementById(`image-preview-${counter}`);
-        
+
         fileListContainer.innerHTML = '';  // Pulisce la lista precedente
         imagePreviewContainer.innerHTML = '';  // Pulisce l'anteprima delle immagini
 
@@ -143,7 +155,7 @@
     }
 
     // Gestione del primo input per le foto
-    document.getElementById('file-input-1').addEventListener('change', function(event) {
+    document.getElementById('file-input-1').addEventListener('change', function (event) {
         updateFileList(event, 1);
 
         // Mostra il pulsante per aggiungere un'altra foto dopo aver selezionato la prima
@@ -151,7 +163,7 @@
     });
 
     // Gestione del pulsante per aggiungere un'altra foto
-    document.getElementById('add-photo-btn').addEventListener('click', function() {
+    document.getElementById('add-photo-btn').addEventListener('click', function () {
         const newCounter = document.querySelectorAll('[id^=file-input-]').length + 1;
 
         let newInputDiv = document.createElement('div');
@@ -174,10 +186,18 @@
 
         // Aggiungi l'evento per il nuovo input
         let fileInput = document.getElementById(`file-input-${newCounter}`);
-        fileInput.addEventListener('change', function(event) {
+        fileInput.addEventListener('change', function (event) {
             updateFileList(event, newCounter);
         });
     });
+
+    // funzione per cercare barcode su internet
+    
+    function searchBarcode() {
+        var barcode = document.getElementById('x').value;
+        var searchUrl = 'https://www.google.com/search?q=' + encodeURIComponent(barcode);
+        window.open(searchUrl, '_blank');
+    }
 </script>
 
 <style>
