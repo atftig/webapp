@@ -64,16 +64,16 @@
 function toggleInsegnaInput(select) {
         var input = document.getElementById('input-insegna');
         var oppure = document.getElementById('oppure');
-        if (select.value === 'altro') {
-            input.style.display = 'block';
+        if (select.value === 'altro') {                 //se clicco altro allora
+            input.style.display = 'block';              //si sbloccano l'input e l' "oppure"
             oppure.style.display = 'block';
-            input.setAttribute('required', 'required'); // Imposta 'required' quando visibile
-            input.focus();
-        } else {
-            input.style.display = 'none';
+            input.setAttribute('required', 'required'); // Imposta 'required' quando, cliccando "altro" diventano visibili
+            input.focus();                              //focus sul nuovo input che avrà il contorno blu
+        } else {                                        //altrimenti se clicco un'insegna
+            input.style.display = 'none';               //input e "oppure" sono invisibili
             oppure.style.display = 'none';
-            input.removeAttribute('required'); // Rimuovi 'required' quando non visibile
-            input.value = ''; // Pulisci il campo se non è necessario
+            input.removeAttribute('required');          // Rimuovere 'required' quando non visibile
+            input.value = '';
         }
     }
 

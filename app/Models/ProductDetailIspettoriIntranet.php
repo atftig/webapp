@@ -18,6 +18,8 @@ class ProductDetailIspettoriIntranet extends Model
         'prezzo',
         // 'foto',
         // 'note',
-        'created_at'
+        'created_at',
+        'id_user',
+        'id_product_ispettori'
     ]; 
 }

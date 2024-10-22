@@ -17,7 +17,7 @@ class WebApp implements ShouldQueue
      */
     public function __construct()
     {
-        //
+        // print('test');
     }
 
     /**
@@ -30,6 +30,8 @@ class WebApp implements ShouldQueue
      public function handle(WebappService $service): void
     {
         // esegue la logica per copiare i dati
+        // Log::info('Inizio esecuzione del job WebApp');
         $service->webapp();
+        // Log::info('Fine esecuzione del job WebApp');
     }
 }

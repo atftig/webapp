@@ -14,13 +14,13 @@ class ProductDetailIspettori extends Model
 
     protected $table = 'product_details_ispettori';  // Nome della tabella
     protected $fillable = [
-        'id',
+        // 'id',
         'barcode',
         'prezzo',
+        'foto',
+        'note',
+        'created_at',
         'id_product_ispettori',
         'id_user',
-        // 'foto',
-        // 'note',
-        'created_at'
     ]; 
 }

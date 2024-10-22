@@ -42,8 +42,7 @@
                     <p class="mt-2">oppure</p>
 
                     <!-- inserimento manuale del barcode -->
-                    <!-- <input type="text" class="form-control mt-2" id="x" name="barcode" placeholder="Inserisci barcode"
-                        style="border: 1px solid #666666; border-radius: 8px; height:50px" required> -->
+
                     <div class="d-flex">
                         <input type="text" class="form-control mt-2" id="x" name="barcode"
                             placeholder="Inserisci barcode"
@@ -192,7 +191,6 @@
     });
 
     // funzione per cercare barcode su internet
-    
     function searchBarcode() {
         var barcode = document.getElementById('x').value;
         var searchUrl = 'https://www.google.com/search?q=' + encodeURIComponent(barcode);

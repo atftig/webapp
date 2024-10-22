@@ -19,6 +19,11 @@ class BuyerController extends Controller
 
     public function store(Request $request)
     {
+
+        // if (!session()->has('id_user')) {
+        //     return redirect()->route('login')->withErrors(['session' => 'La sessione è scaduta o non valida.']);
+        // }
+
         // Validazione dei dati
         $validatedData = $request->validate([
             'barcode' => 'required|string|max:100',
@@ -77,6 +82,7 @@ class BuyerController extends Controller
         $validatedData = $request->validate([
             'insegna' => 'required|string|max:50',
             'pv' => 'required|string|max:50',
+            'insegna_altro' => 'nullable|string'
         ]);
 
         // $validatedData = $request->input();
@@ -86,7 +92,7 @@ class BuyerController extends Controller
             [
                 'insegna' => trim($validatedData['insegna']),
                 'pv' => trim($validatedData['pv']),
-                'id' => trim($validatedData['insegna'])."-".trim($validatedData['pv'])
+                'id' => trim($validatedData['insegna']) . "-" . trim($validatedData['pv'])
             ],
             [
                 'created_at' => now(),  // Imposta la data di creazione
@@ -118,9 +124,9 @@ class BuyerController extends Controller
 
         // return redirect()->to('/homepage-ispettori')->with('success', 'Dati salvati con successo!');
         return view('app.homepage-ispettori', [
-            'insegna' => trim($validatedData['insegna']), 
+            'insegna' => trim($validatedData['insegna']),
             'pv' => trim($validatedData['pv']),
-            'id_product_ispettori'=>trim($validatedData['insegna'])."-".trim($validatedData['pv']),
-            ]);
+            'id_product_ispettori' => trim($validatedData['insegna']) . "-" . trim($validatedData['pv']),
+        ]);
     }
 }

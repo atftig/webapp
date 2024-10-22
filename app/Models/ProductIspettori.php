@@ -17,7 +17,7 @@ class ProductIspettori extends Model
     protected $fillable = [
         'insegna',
         'pv',
+        'created_at',
         'id',
-        'created_at'
     ]; 
 }

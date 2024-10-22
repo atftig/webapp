@@ -3,6 +3,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+
+// controller per la ricerca internet del barcode inserito nell'input in home buyer
 class BarcodeController extends Controller
 {
     public function search(Request $request)
