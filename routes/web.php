@@ -6,6 +6,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AddController;
 use App\Http\Controllers\BuyerController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
+use App\Http\Controllers\SchedulerController;
+use App\Http\Controllers\BarcodeController;
 
 /*
 |----------------------------------------------------------------------
@@ -74,6 +76,10 @@ Route::get('/error-page', function(){
 })->name('error-page');
 
 Route::post('/search-barcode', [BarcodeController::class, 'search'])->name('barcode.search');
+
+
+
+
 
 
 

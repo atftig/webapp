@@ -17,7 +17,7 @@ return [
     */
 
     'name' => env('APP_NAME', 'Laravel'),
-
+    
     /*
     |--------------------------------------------------------------------------
     | Application Environment
@@ -185,4 +185,5 @@ return [
         // 'Example' => App\Facades\Example::class,
     ])->toArray(),
 
+    'scheduler_api_key' => env('SCHEDULER_API_KEY'),
 ];
