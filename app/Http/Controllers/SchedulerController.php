@@ -34,19 +34,21 @@ class SchedulerController extends Controller
     private function syncTabella(string $tableName): JsonResponse{
         $transactionNow = now();
         $status = 'failure';
-        $array = [];
+        $results = collect();
 
         if($tableName == 'product_ispettori'){
-            ProductIspettori::whereNull('prenotato')->update(['prenotato' => $transactionNow]);
-            $array = ProductIspettori::where('prenotato', $transactionNow)->get()->toArray();
+            $idsToUpdate = ProductIspettori::whereNull('prenotato')->pluck('id')->toArray(); // prendo gli id delle righe da ritornare(prenotato = null)
+            ProductIspettori::whereIn('id', $idsToUpdate)->update(['prenotato' => $transactionNow]);   //qui li aggiorna
+            $results = ProductIspettori::whereIn('id', $idsToUpdate)->get(); // otteniamo le righe aggiornate
             $status = 'ok';
         }
 
+        // ritorniamo i risultati   
         return response()->json([
             'transactionNow' => $transactionNow,
             'table' => $tableName,
             'status' => $status,
-            'data' => $array
+            'data' => $results
         ]);
     }
 }
