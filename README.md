@@ -91,3 +91,20 @@ For open source projects, say how it is licensed.
 
 ## Project status
 If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
+
+
+
+
+## SchedulerController
+Il controller gestisce la sincronizzazione dei dati per varie tabelle attraverso API e aggiorna i campi prenotato ed inviato.
+ Ha due metodi principali:
+1) __invoke: Questo metodo è il punto di ingresso per la richiesta API. Verifica se l’API key (X-APIKEY) è valida e poi esegue la sincronizzazione delle tabelle tramite il metodo syncTabella oppure confirmSyncTabella, a seconda dei parametri ricevuti.
+
+2) syncTabella: Sincronizza una tabella specifica aggiornata in base al parametro tableName.
+
+3) confirmSyncTabella: Conferma la sincronizzazione per i record di una tabella. Riceve il nome della tabella (tableName) e il timestamp (transactionTimestamp)
+
+## WebappService
+Questo servizio è responsabile dell’interazione con le API esterne per sincronizzare i dati tra un’applicazione web e le tabelle del database locale = Esegue un ciclo di sincronizzazione per varie tabelle, invocando una richiesta API per ogni tabella. 
+
+1) webapp: Esegue un ciclo di sincronizzazione per varie tabelle, invocando una richiesta API per ogni tabella. 

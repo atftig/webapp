@@ -16,7 +16,8 @@ class ProductMediaIntranet extends Model
     protected $fillable = [
         'barcode',
         'photo',
-        'estensione'       // Estensione del file (es. .jpeg, .jpg, .png)
-
+        'estensione',       // Estensione del file (es. .jpeg, .jpg, .png)
+        'prenotato',
+        'inviato'
     ];
 }

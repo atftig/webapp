@@ -22,5 +22,7 @@ class ProductDetailIspettori extends Model
         'created_at',
         'id_product_ispettori',
         'id_user',
+        'prenotato',
+        'inviato'
     ]; 
 }

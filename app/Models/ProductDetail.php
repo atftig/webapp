@@ -17,5 +17,11 @@ class ProductDetail extends Model
     protected $fillable = [
         'barcode',
         'note',
+        'prezzo',
+        'created_at',
+        'id_product_ispettori',
+        'id_user',
+        'prenotato',
+        'inviato'
     ];
 }

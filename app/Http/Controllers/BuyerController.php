@@ -90,11 +90,11 @@ class BuyerController extends Controller
         // Creazione di un nuovo record nella tabella 'product_ispettori'
         ProductIspettori::updateOrCreate(
             [
-                'insegna' => trim($validatedData['insegna']),
-                'pv' => trim($validatedData['pv']),
                 'id' => trim($validatedData['insegna']) . "-" . trim($validatedData['pv'])
             ],
             [
+                'insegna' => trim($validatedData['insegna']),
+                'pv' => trim($validatedData['pv']),
                 'created_at' => now(),  // Imposta la data di creazione
             ]
         );

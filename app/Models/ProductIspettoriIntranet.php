@@ -20,4 +20,5 @@ class ProductIspettoriIntranet extends Model
         'created_at',
         'id',
     ];
+    protected $keyType = 'string';
 }
