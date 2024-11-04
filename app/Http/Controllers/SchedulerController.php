@@ -117,9 +117,9 @@ class SchedulerController extends Controller
         $transactionNow = now();        //stampa esattamente data e ora di ora
         $updatedRows = 0;
         $status = 'failure';
-        // $results = collect();
-
+        // $results = collect();   
         Log::info("Eseguito confirmSyncTabella per tabella: $tableName con transactionTimestamp: $transactionTimestamp");
+
 
         // Mappa delle tabelle e dei rispettivi modelli
         switch ($tableName) {
