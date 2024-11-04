@@ -112,75 +112,136 @@ class SchedulerController extends Controller
     }
 
     // per la colonna 'inviato'
-    private function confirmSyncTabella(string $tableName, string $transactionTimestamp): JsonResponse
+    // private function confirmSyncTabella(string $tableName, string $transactionTimestamp): JsonResponse
+    // {
+    //     // $transactionNow = now();        //stampa esattamente data e ora di ora
+    //     // $updatedRows = 0;
+    //     // $status = 'failure';
+    //     // // $results = collect();   
+    //     // Log::info("Eseguito confirmSyncTabella per tabella: $tableName con transactionTimestamp: $transactionTimestamp");
+
+    //     $transactionNow = now();        //stampa esattamente data e ora di ora
+    //     Log::info("Eseguito syncTabella per tabella: $tableName con transactionNow: $transactionNow");
+    //     $status = 'failure';
+    //     $results = collect();
+
+
+
+    //     // Mappa delle tabelle e dei rispettivi modelli
+    //     switch ($tableName) {
+    //         case 'product_ispettori':
+    //             // ProductIspettori::where('prenotato', $transactionTimestamp)->whereNotNull('prenotato')->update(['inviato' =>  $transactionNow]);
+    //             // $status = 'ok';
+    //             $updatedRows = ProductIspettori::whereNotNull('prenotato')
+    //                 ->where('prenotato', $transactionNow)
+    //                 ->update(['inviato' => $transactionNow]);
+    //             break;
+
+    //         case 'product_details':
+    //             // ProductDetail::where('prenotato', $transactionTimestamp)->update(['inviato' => $transactionNow]);
+    //             // $status = 'ok';
+    //             $updatedRows = ProductDetail::whereNotNull('prenotato')
+    //                 ->where('prenotato', $transactionNow)
+    //                 ->update(['inviato' => $transactionNow]);
+    //             break;
+
+    //         case 'product_details_ispettori':
+    //             // ProductDetailIspettori::where('prenotato', $transactionTimestamp)->update(['inviato' => $transactionNow]);
+    //             // $status = 'ok';
+    //             $updatedRows = ProductDetailIspettori::whereNotNull('prenotato')
+    //                 ->where('prenotato', $transactionNow)
+    //                 ->update(['inviato' => $transactionNow]);
+    //             break;
+
+    //         case 'product_media':
+    //             // ProductMedia::where('prenotato', $transactionTimestamp)->update(['inviato' => $transactionNow]);
+    //             // $status = 'ok';
+    //             $updatedRows = ProductMedia::whereNotNull('prenotato')
+    //                 ->where('prenotato', $transactionNow)
+    //                 ->update(['inviato' => $transactionNow]);
+    //             break;
+
+    //         // case 'users':
+    //         //     $idsToUpdate = User::whereNull('prenotato')->pluck('id')->toArray();
+    //         //     User::whereIn('id', $idsToUpdate)->update(['prenotato' => $transactionNow]);
+    //         //     $results = User::whereIn('id', $idsToUpdate)->get();
+    //         //     $status = 'ok';
+    //         //     break;
+
+    //         default:
+    //             $status = 'invalid_table';
+    //             Log::warning("Nome tabella non valido: $tableName");
+    //             break;
+    //     }
+
+    //     // Log per verificare il numero di righe aggiornate e lo stato dell'operazione
+    //     Log::info("Numero di righe aggiornate in `$tableName`: $updatedRows. Stato: $status");
+
+    //     // Determina lo status in base al numero di righe aggiornate
+    //     return response()->json([
+    //         'transactionNow' => $transactionNow,
+    //         'table' => $tableName,
+    //         'status' => $status,
+    //         'data' => $results
+    //     ]);
+    // }
+// }
+
+    private function confirmSyncTabella(string $tableName): JsonResponse
     {
         $transactionNow = now();        //stampa esattamente data e ora di ora
-        $updatedRows = 0;
+        Log::info("Eseguito syncTabella per tabella: $tableName con transactionNow: $transactionNow");
         $status = 'failure';
-        // $results = collect();   
-        Log::info("Eseguito confirmSyncTabella per tabella: $tableName con transactionTimestamp: $transactionTimestamp");
+        $results = collect();
 
 
         // Mappa delle tabelle e dei rispettivi modelli
         switch ($tableName) {
             case 'product_ispettori':
-                // ProductIspettori::where('prenotato', $transactionTimestamp)->whereNotNull('prenotato')->update(['inviato' =>  $transactionNow]);
-                // $status = 'ok';
-                $updatedRows = ProductIspettori::whereNotNull('prenotato')
-                    ->where('prenotato', $transactionTimestamp)
-                    ->update(['inviato' => $transactionNow]);
+                // Aggiorna direttamente il campo 'inviato' per i record dove 'prenotato' non è nullo
+                ProductIspettori::whereNotNull('prenotato')->update(['inviato' => $transactionNow]);
+        
+                // Recupera i record aggiornati per conferma
+                $results = ProductIspettori::whereNotNull('prenotato')->get();
+                
+                // Logga gli ID dei record aggiornati per monitoraggio
+                Log::info("ID aggiornati in product_ispettori: ", $results->pluck('id')->toArray());
+                $status = 'ok';
                 break;
 
             case 'product_details':
-                // ProductDetail::where('prenotato', $transactionTimestamp)->update(['inviato' => $transactionNow]);
-                // $status = 'ok';
-                $updatedRows = ProductDetail::whereNotNull('prenotato')
-                    ->where('prenotato', $transactionTimestamp)
-                    ->update(['inviato' => $transactionNow]);
+                ProductDetail::whereNotNull('prenotato')->update(['inviato' => $transactionNow]);
+                $results = ProductDetail::whereNotNull('prenotato')->get();
+                Log::info("ID aggiornati in product_details: ", $results->pluck('id')->toArray());
+                $status = 'ok';
                 break;
 
             case 'product_details_ispettori':
-                // ProductDetailIspettori::where('prenotato', $transactionTimestamp)->update(['inviato' => $transactionNow]);
-                // $status = 'ok';
-                $updatedRows = ProductDetailIspettori::whereNotNull('prenotato')
-                    ->where('prenotato', $transactionTimestamp)
-                    ->update(['inviato' => $transactionNow]);
+                ProductDetailIspettori::whereNotNull('prenotato')->update(['inviato' => $transactionNow]);
+                $results = ProductDetailIspettori::whereNotNull('prenotato')->get();
+                Log::info("ID aggiornati in product_details_ispettori: ", $results->pluck('id')->toArray());
+                $status = 'ok';
                 break;
 
             case 'product_media':
-                // ProductMedia::where('prenotato', $transactionTimestamp)->update(['inviato' => $transactionNow]);
-                // $status = 'ok';
-                $updatedRows = ProductMedia::whereNotNull('prenotato')
-                    ->where('prenotato', $transactionTimestamp)
-                    ->update(['inviato' => $transactionNow]);
+                ProductMedia::whereNotNull('prenotato')->update(['inviato' => $transactionNow]);
+                $results = ProductMedia::whereNotNull('prenotato')->get();
+                Log::info("ID aggiornati in product_media: ", $results->pluck('id')->toArray());
+                $status = 'ok';
                 break;
 
-            // case 'users':
-            //     $idsToUpdate = User::whereNull('prenotato')->pluck('id')->toArray();
-            //     User::whereIn('id', $idsToUpdate)->update(['prenotato' => $transactionNow]);
-            //     $results = User::whereIn('id', $idsToUpdate)->get();
-            //     $status = 'ok';
-            //     break;
 
             default:
                 $status = 'invalid_table';
-                Log::warning("Nome tabella non valido: $tableName");
                 break;
         }
 
-        // Log per verificare il numero di righe aggiornate e lo stato dell'operazione
-        Log::info("Numero di righe aggiornate in `$tableName`: $updatedRows. Stato: $status");
-
-        // Determina lo status in base al numero di righe aggiornate
-        if ($updatedRows > 0) {
-            $status = 'ok';
-        }
         // Ritorniamo i risultati
         return response()->json([
             'transactionNow' => $transactionNow,
             'table' => $tableName,
             'status' => $status,
-            'data' => []  // numero di record aggiornati
+            'data' => $results
         ]);
     }
 }
