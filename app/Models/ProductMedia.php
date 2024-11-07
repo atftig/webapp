@@ -20,6 +20,7 @@ class ProductMedia extends Model
         'photo',
         'estensione', // Estensione del file (es. .jpeg, .jpg, .png)
         'prenotato',
-        'inviato'
+        'inviato',
+        'created_at'
     ];
 }

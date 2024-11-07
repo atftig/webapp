@@ -59,6 +59,7 @@ class BuyerController extends Controller
             $productMedia->barcode = $productDetail->barcode;
             $productMedia->photo = $imageName; // Salva solo il nome del file
             $productMedia->estensione = '.' . $file->getClientOriginalExtension();
+            $productMedia->created_at = date('Y-m-d H:i:s');
             $productMedia->save();
 
             // Memorizza il nome del file salvato
