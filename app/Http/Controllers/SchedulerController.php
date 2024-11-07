@@ -58,7 +58,7 @@ class SchedulerController extends Controller
     // metodo per la colonna 'prenotato'
     private function syncTabella(string $tableName): JsonResponse
     {  
-        $transactionNow = strtotime( date('Y-m-d H:i:s')); //now();        //stampa esattamente data e ora di ora
+        $transactionNow = date('Y-m-d H:i:s'); //now();        //stampa esattamente data e ora di ora
         Log::info("Eseguito syncTabella per tabella: $tableName con transactionNow: $transactionNow");
         $status = 'failure';
         $results = collect();
