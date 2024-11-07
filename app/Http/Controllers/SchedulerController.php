@@ -198,16 +198,17 @@ class SchedulerController extends Controller
         Log::info("Sto eseguendo digitalocean confirmSyncTabella per tabella: $tableName con transactionNow: $transactionNow");
         $status = 'failure';
         $results = collect();
-
-
+        
+        
         // Mappa delle tabelle e dei rispettivi modelli
         switch ($tableName) {
             case 'product_ispettori':
                 // Aggiorna direttamente il campo 'inviato' per i record dove 'prenotato' non è nullo
                 ProductIspettori::whereNotNull('prenotato')                 //dove prenotato non è nullo
-                    ->whereColumn('prenotato', $transactionNow)     //ed è uguale a $transactionNow ricevuto in argomento
-                    ->update(['inviato' => $transactionNow]);
-
+                ->whereColumn('prenotato', $transactionNow)     //ed è uguale a $transactionNow ricevuto in argomento
+                ->update(['inviato' => $transactionNow]);
+                
+                Log::info("eseguita digitalocean confirmSyncTabella per tabella: $tableName con transactionNow: $transactionNow");
                 // Recupera i record aggiornati per conferma
                 $results = ProductIspettori::whereNotNull('prenotato')->get();
 
