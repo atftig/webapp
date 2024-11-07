@@ -210,9 +210,10 @@ class SchedulerController extends Controller
                 ->where('prenotato', $transactionTimestamp)     //ed è uguale a $transactionNow ricevuto in argomento
                 ->update(['inviato' => $transactionTimestamp]);
                 
-                Log::info("eseguita digitalocean confirmSyncTabella per tabella: $tableName con transactionNow: $transactionNow");
+                Log::info("eseguita digitalocean confirmSyncTabella per tabella: $tableName con transactionNow: $transactionTimestamp");
                 // Recupera i record aggiornati per conferma
-                $results = ProductIspettori::whereNotNull('prenotato')->get();
+                $results = ProductIspettori::whereNotNull('prenotato') 
+                    ->where('prenotato', $transactionTimestamp)->get();
 
                 // Logga gli ID dei record aggiornati per monitoraggio
                 Log::info("ID aggiornati in product_ispettori: ", $results->pluck('id')->toArray());
