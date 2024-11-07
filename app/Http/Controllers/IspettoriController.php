@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\ProductDetailIspettori;
+use Illuminate\Support\Facades\Log;
 
 class IspettoriController extends Controller
 {
@@ -73,7 +74,7 @@ class IspettoriController extends Controller
             foreach ($request->file('foto') as $file) {
                 // Salva il file e associa al prodotto
                 $path = $file->store('images', 'public'); // Salva nella cartella 'storage/app/public/images'
-
+                Log::info("file: " . $path);
                 // Se hai una relazione immagini, puoi salvare il percorso:
                 $productDetail->images()->create(['path' => $path]);
             }
