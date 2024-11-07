@@ -20,18 +20,19 @@ class SchedulerController extends Controller
         // I dati della richiesta e il valore dell'header X-APIKEY vengono registrati nei log
         Log::info("Richiesta ricevuta: " . json_encode($request->all()));
         Log::info("Header X-APIKEY: " . $request->header('X-APIKEY'));
-
+        
         $apiKey = config('app.scheduler_api_key');      //questo è il valore utilizzato per autenticare la richiesta  
         $myResp = null;     //variabile per ottenere una risposta che verrà resstituita
-
+        
         try {
             if ($request->header('X-APIKEY') == $apiKey) {
                 $transactionTimestamp = $request->input('transactionNow');
                 if ($request->has('syncTabella')) {
                     $myResp = $this->syncTabella($request->input('syncTabella'));       //Se la richiesta contiene il parametro syncTabella, viene chiamato il metodo syncTabella e passata la tabella specificata.
-
+                    
                     // questo è per la colonna 'inviato'
                 } else if ($request->has('confirmSyncTabella') && $transactionTimestamp != null) {
+                    Log::info("prima di confirmSyncTabella digital ocean");
                     $myResp = $this->confirmSyncTabella(
                         $request->input('confirmSyncTabella'),
                         transactionTimestamp: $transactionTimestamp
