@@ -196,7 +196,7 @@ class SchedulerController extends Controller
 
     private function confirmSyncTabella(string $tableName, string $transactionTimestamp): JsonResponse
     {
-        $transactionNow = date_parse_from_format('Y-m-d H:i:s', $transactionTimestamp);        //stampa esattamente data e ora di ora
+        $transactionNow = \DateTime::createFromFormat('Y-m-d H:i:s', $transactionTimestamp);        //stampa esattamente data e ora di ora
         Log::info("Sto eseguendo digitalocean confirmSyncTabella per tabella: $tableName con transactionNow: " . $transactionTimestamp);
         $status = 'failure';
         $results = collect();
