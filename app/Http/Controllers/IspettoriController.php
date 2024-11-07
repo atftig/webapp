@@ -68,13 +68,14 @@ class IspettoriController extends Controller
         // session(['barcode' => $productDetail->barcode]);
         // session(['prezzo' => $validatedData['prezzo']]);
         // session(['note' => $validatedData['note'] ?? null]);
+        Log::info("file1: ");
 
         // Logica per il salvataggio delle foto
         if ($request->hasFile('foto')) {
             foreach ($request->file('foto') as $file) {
                 // Salva il file e associa al prodotto
                 $path = $file->store('images', 'public'); // Salva nella cartella 'storage/app/public/images'
-                Log::info("file: " . $path);
+                Log::info("file2: " . $path);
                 // Se hai una relazione immagini, puoi salvare il percorso:
                 $productDetail->images()->create(['path' => $path]);
             }
