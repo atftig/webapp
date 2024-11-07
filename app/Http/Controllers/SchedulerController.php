@@ -46,6 +46,7 @@ class SchedulerController extends Controller
                 ]);
             }
         } catch (\Throwable $th) {
+            Log::error($th);
             $myResp = response()->json([
                 'error' => $th->getMessage(),
             ]);
