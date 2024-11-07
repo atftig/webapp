@@ -20,16 +20,16 @@ class SchedulerController extends Controller
         // I dati della richiesta e il valore dell'header X-APIKEY vengono registrati nei log
         Log::info("Richiesta ricevuta: " . json_encode($request->all()));
         Log::info("Header X-APIKEY: " . $request->header('X-APIKEY'));
-        
+
         $apiKey = config('app.scheduler_api_key');      //questo è il valore utilizzato per autenticare la richiesta  
         $myResp = null;     //variabile per ottenere una risposta che verrà resstituita
-        
+
         try {
             if ($request->header('X-APIKEY') == $apiKey) {
                 $transactionTimestamp = $request->input('transactionNow');
                 if ($request->has('syncTabella')) {
                     $myResp = $this->syncTabella($request->input('syncTabella'));       //Se la richiesta contiene il parametro syncTabella, viene chiamato il metodo syncTabella e passata la tabella specificata.
-                    
+
                     // questo è per la colonna 'inviato'
                 } else if ($request->has('confirmSyncTabella') && $transactionTimestamp != null) {
                     Log::info("prima di confirmSyncTabella digital ocean");
@@ -59,9 +59,9 @@ class SchedulerController extends Controller
 
     // metodo per la colonna 'prenotato'
     private function syncTabella(string $tableName): JsonResponse
-    {  
+    {
         $transactionNow = date('Y-m-d H:i:s'); //now();        //stampa esattamente data e ora di ora
-        Log::info("Eseguito syncTabella per tabella: $tableName con transactionNow: $transactionNow");
+        Log::info("sto eseguendo syncTabella per tabella: $tableName con transactionNow: $transactionNow");
         $status = 'failure';
         $results = collect();
 
@@ -93,7 +93,30 @@ class SchedulerController extends Controller
             case 'product_media':
                 $idsToUpdate = ProductMedia::whereNull('prenotato')->pluck('id')->toArray();
                 ProductMedia::whereIn('id', $idsToUpdate)->update(['prenotato' => $transactionNow]);
-                $results = ProductMedia::whereIn('id', $idsToUpdate)->get();
+                $results = ProductMedia::whereIn('id', $idsToUpdate)->select([
+                    'id',
+                    'barcode',
+                    'photo',
+                    'estensione',
+                    'prenotato',
+                    'inviato',
+                    'created_at',
+                    'binary_file'
+                ])->get()->map(function ($item, int $key) {
+                    $item['base64_file'] = base64_encode($item['binary_file']); 
+                    unset($item['binary_file']); 
+                    return $item ;});
+
+                // $results = ProductMedia::whereIn('id', $idsToUpdate)->get([
+                //     'id',
+                //     'barcode',
+                //     'photo',
+                //     'estensione',
+                //     'prenotato',
+                //     'inviato',
+                //     'created_at',
+                //     'base64_file'
+                // ]);
                 $status = 'ok';
                 break;
 
@@ -109,7 +132,9 @@ class SchedulerController extends Controller
                 break;
         }
 
+        Log::info("Eseguito syncTabella per tabella: $tableName con transactionNow: $transactionNow");
         // Ritorniamo i risultati
+
         return response()->json([
             'transactionNow' => $transactionNow,
             'table' => $tableName,
@@ -200,19 +225,19 @@ class SchedulerController extends Controller
         Log::info("Sto eseguendo digitalocean confirmSyncTabella per tabella: $tableName con transactionNow: " . $transactionTimestamp);
         $status = 'failure';
         $results = collect();
-        
-        
+
+
         // Mappa delle tabelle e dei rispettivi modelli
         switch ($tableName) {
             case 'product_ispettori':
                 // Aggiorna direttamente il campo 'inviato' per i record dove 'prenotato' non è nullo
                 ProductIspettori::whereNotNull('prenotato')                 //dove prenotato non è nullo
-                ->where('prenotato', $transactionTimestamp)     //ed è uguale a $transactionNow ricevuto in argomento
-                ->update(['inviato' => $transactionTimestamp]);
-                
+                    ->where('prenotato', $transactionTimestamp)     //ed è uguale a $transactionNow ricevuto in argomento
+                    ->update(['inviato' => $transactionTimestamp]);
+
                 Log::info("eseguita digitalocean confirmSyncTabella per tabella: $tableName con transactionNow: $transactionTimestamp");
                 // Recupera i record aggiornati per conferma
-                $results = ProductIspettori::whereNotNull('prenotato') 
+                $results = ProductIspettori::whereNotNull('prenotato')
                     ->where('prenotato', $transactionTimestamp)->get();
 
                 // Logga gli ID dei record aggiornati per monitoraggio
@@ -221,22 +246,40 @@ class SchedulerController extends Controller
                 break;
 
             case 'product_details':
-                ProductDetail::whereNotNull('prenotato')->update(['inviato' => $transactionNow]);
-                $results = ProductDetail::whereNotNull('prenotato')->get();
+                ProductDetail::whereNotNull('prenotato')
+                    ->where('prenotato', $transactionTimestamp)
+                    ->update(['inviato' => $transactionNow]);
+                $results = ProductDetail::whereNotNull('prenotato')
+                    ->where('prenotato', $transactionTimestamp)->get();
                 Log::info("ID aggiornati in product_details: ", $results->pluck('id')->toArray());
                 $status = 'ok';
                 break;
 
             case 'product_details_ispettori':
-                ProductDetailIspettori::whereNotNull('prenotato')->update(['inviato' => $transactionNow]);
-                $results = ProductDetailIspettori::whereNotNull('prenotato')->get();
+                ProductDetailIspettori::whereNotNull('prenotato')
+                    ->where('prenotato', $transactionTimestamp)
+                    ->update(['inviato' => $transactionNow]);
+                $results = ProductDetailIspettori::whereNotNull('prenotato')
+                    ->where('prenotato', $transactionTimestamp)->get();
                 Log::info("ID aggiornati in product_details_ispettori: ", $results->pluck('id')->toArray());
                 $status = 'ok';
                 break;
 
             case 'product_media':
-                ProductMedia::whereNotNull('prenotato')->update(['inviato' => $transactionNow]);
-                $results = ProductMedia::whereNotNull('prenotato')->get();
+                Log::info("prima di aggiornare product_media ");
+                ProductMedia::whereNotNull('prenotato')
+                    ->where('prenotato', $transactionTimestamp)
+                    ->update(['inviato' => $transactionNow]);
+                $results = ProductMedia::whereNotNull('prenotato')
+                    ->where('prenotato', $transactionTimestamp)->get([
+                            'id',
+                            'barcode',
+                            'photo',
+                            'estensione',
+                            'prenotato',
+                            'inviato',
+                            'created_at',
+                        ]);
                 Log::info("ID aggiornati in product_media: ", $results->pluck('id')->toArray());
                 $status = 'ok';
                 break;

@@ -50,17 +50,26 @@ class BuyerController extends Controller
         // Caricamento delle foto e salvataggio nel filesystem
         foreach ($request->file('photo') as $file) {
             // Crea un nome univoco per ogni immagine
-            $imageName = time() . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+            $imageName = date('Ymd_His') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
             // Sposta l'immagine nella cartella 'public/images'
-            $file->move(public_path('images'), $imageName);
 
             // Crea un nuovo record per ogni immagine caricata
-            $productMedia = new ProductMedia();
-            $productMedia->barcode = $productDetail->barcode;
-            $productMedia->photo = $imageName; // Salva solo il nome del file
-            $productMedia->estensione = '.' . $file->getClientOriginalExtension();
-            $productMedia->created_at = date('Y-m-d H:i:s');
-            $productMedia->save();
+            // $productMedia = new ProductMedia();
+            // $productMedia->barcode = $productDetail->barcode;
+            // $productMedia->photo = $imageName; // Salva solo il nome del file
+            // $productMedia->estensione = '.' . $file->getClientOriginalExtension();
+            // $productMedia->created_at = date('Y-m-d H:i:s');
+            // $productMedia->binary_file = $file->getContent();
+            // $productMedia->save();
+            $result1 = ProductMedia::updateOrCreate(
+                ['barcode' => $productDetail->barcode, 'photo' => $imageName],
+                [
+                    'estensione' => '.' . $file->getClientOriginalExtension(),
+                    'created_at' => date('Y-m-d H:i:s'),
+                    'binary_file' =>$file->getContent()
+                ]
+            );
+            $file->move(public_path('images'), $imageName);
 
             // Memorizza il nome del file salvato
             $fileNames[] = $imageName;
