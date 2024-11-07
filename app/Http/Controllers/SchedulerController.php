@@ -207,8 +207,8 @@ class SchedulerController extends Controller
             case 'product_ispettori':
                 // Aggiorna direttamente il campo 'inviato' per i record dove 'prenotato' non è nullo
                 ProductIspettori::whereNotNull('prenotato')                 //dove prenotato non è nullo
-                ->whereColumn('prenotato', $transactionNow)     //ed è uguale a $transactionNow ricevuto in argomento
-                ->update(['inviato' => $transactionNow]);
+                ->whereColumn('prenotato', $transactionTimestamp)     //ed è uguale a $transactionNow ricevuto in argomento
+                ->update(['inviato' => $transactionTimestamp]);
                 
                 Log::info("eseguita digitalocean confirmSyncTabella per tabella: $tableName con transactionNow: $transactionNow");
                 // Recupera i record aggiornati per conferma
