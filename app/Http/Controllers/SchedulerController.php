@@ -7,6 +7,7 @@ use App\Models\ProductDetail;
 use App\Models\ProductDetailIspettori;
 use App\Models\ProductMedia;
 use App\Models\User;
+use Date;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -193,7 +194,7 @@ class SchedulerController extends Controller
 
     private function confirmSyncTabella(string $tableName, string $transactionTimestamp): JsonResponse
     {
-        $transactionNow = strtotime($transactionTimestamp);        //stampa esattamente data e ora di ora
+        $transactionNow = date(strtotime($transactionTimestamp)) ;        //stampa esattamente data e ora di ora
         Log::info("Sto eseguendo digitalocean confirmSyncTabella per tabella: $tableName con transactionNow: $transactionNow");
         $status = 'failure';
         $results = collect();
