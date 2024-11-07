@@ -1,21 +1,23 @@
 <?php
 
-namespace App\Services;
+// TUTTO COMMENTATO PERCHE IN QUESTO FILE NON SERVE IL SERVICE -> LO USO IN INTRANET-WS-2.0
+
+// namespace App\Services;
 // ------------------------------buyer------------
-use App\Models\ProductMediaIntranet;
-use App\Models\UserIntranet;
-use App\Models\ProductDetailIntranet;
-use App\Models\ProductMedia;
-use App\Models\ProductDetail;
-use App\Models\User;
+// use App\Models\ProductMediaIntranet;
+// use App\Models\UserIntranet;
+// use App\Models\ProductDetailIntranet;
+// use App\Models\ProductMedia;
+// use App\Models\ProductDetail;
+// use App\Models\User;
 // ------------------------------ispettori------------
-use App\Models\ProductDetailIspettori;
-use App\Models\ProductDetailIspettoriIntranet;
-use App\Models\ProductIspettori;
-use App\Models\ProductIspettoriIntranet;
-use Illuminate\Support\Facades\Log;
+// use App\Models\ProductDetailIspettori;
+// use App\Models\ProductDetailIspettoriIntranet;
+// use App\Models\ProductIspettori;
+// use App\Models\ProductIspettoriIntranet;
+// use Illuminate\Support\Facades\Log;
 // use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Str;
+// use Illuminate\Support\Str;
 
 /**
  * Class webappService.
